@@ -38,6 +38,13 @@
     .hot{background:rgba(34,197,94,.16);border-color:rgba(34,197,94,.3);color:#dcfce7}
     .warn{background:rgba(250,204,21,.13);border-color:rgba(250,204,21,.28);color:#fef9c3}
     .small{font-size:12px;color:#aaa;margin-top:10px;line-height:1.5}
+
+    /* Informational paragraph for development status under extra motors */
+    .dev-info{
+      font-size:12px;
+      color:#b5c0d5;
+      margin:6px 0 12px;
+    }
     .explain{margin-top:16px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:14px;text-align:left;color:#ddd;font-size:14px;line-height:1.6}
     .tag{color:#00f5ff;font-weight:bold}
     .score-list{margin-top:8px;text-align:left}
@@ -87,6 +94,9 @@
     body.claro p,
     body.claro .small{
       color:#374151;
+    }
+    body.claro .dev-info{
+      color:#475569;
     }
     body.claro .sub{
       color:#475569;
@@ -327,7 +337,7 @@
     <div class="panel">
       <h2>Motor de Sucesiones</h2>
       <p>
-        Escribe el último sorteo base. El sistema usa sucesiones, acompañantes, coincidencias, frecuencia caliente y compatibilidad por lotería detectada.
+        Escribe el último sorteo base. El sistema usa sucesiones, acompañantes, coincidencias, frecuencia caliente, compatibilidad por lotería, datos históricos, simulaciones y pruebas de resultados reales.
       </p>
 
       <input id="baseResultado" placeholder="Ej: 992194 o 99 21 94" maxlength="12" />
@@ -402,12 +412,14 @@
        datos correspondientes. -->
   <div class="panel">
     <h2>Otros motores</h2>
+    <!-- Informational note that the extra motors are still under development -->
+    <p class="dev-info">Aún estos sistemas están en desarrollo, por lo que no contienen datos históricos ni pruebas de resultados reales.</p>
     <details>
       <summary>Motor La Primera Día</summary>
       <p>Motor de sucesiones específico para La Primera Día (versión aleatoria).</p>
       <div class="random-section">
         <input id="randInput_laPrimeraDia" placeholder="Base (opcional)" maxlength="12" />
-        <button onclick="generarRandom('laPrimeraDia')">Generar al azar</button>
+        <button onclick="generarRandom('laPrimeraDia')">Generar</button>
         <div class="random-results">
           <h5>Quinielas</h5>
           <div id="randQuinielas_laPrimeraDia">--</div>
@@ -423,7 +435,7 @@
       <p>Motor de sucesiones específico para La Primera Noche (versión aleatoria).</p>
       <div class="random-section">
         <input id="randInput_laPrimeraNoche" placeholder="Base (opcional)" maxlength="12" />
-        <button onclick="generarRandom('laPrimeraNoche')">Generar al azar</button>
+        <button onclick="generarRandom('laPrimeraNoche')">Generar</button>
         <div class="random-results">
           <h5>Quinielas</h5>
           <div id="randQuinielas_laPrimeraNoche">--</div>
@@ -439,7 +451,7 @@
       <p>Motor de sucesiones específico para Nacional (versión aleatoria).</p>
       <div class="random-section">
         <input id="randInput_nacional" placeholder="Base (opcional)" maxlength="12" />
-        <button onclick="generarRandom('nacional')">Generar al azar</button>
+        <button onclick="generarRandom('nacional')">Generar</button>
         <div class="random-results">
           <h5>Quinielas</h5>
           <div id="randQuinielas_nacional">--</div>
@@ -455,7 +467,7 @@
       <p>Motor de sucesiones específico para Real (versión aleatoria).</p>
       <div class="random-section">
         <input id="randInput_real" placeholder="Base (opcional)" maxlength="12" />
-        <button onclick="generarRandom('real')">Generar al azar</button>
+        <button onclick="generarRandom('real')">Generar</button>
         <div class="random-results">
           <h5>Quinielas</h5>
           <div id="randQuinielas_real">--</div>
@@ -471,7 +483,7 @@
       <p>Motor de sucesiones específico para Gana Más (versión aleatoria).</p>
       <div class="random-section">
         <input id="randInput_ganaMas" placeholder="Base (opcional)" maxlength="12" />
-        <button onclick="generarRandom('ganaMas')">Generar al azar</button>
+        <button onclick="generarRandom('ganaMas')">Generar</button>
         <div class="random-results">
           <h5>Quinielas</h5>
           <div id="randQuinielas_ganaMas">--</div>
@@ -487,7 +499,7 @@
       <p>Motor de sucesiones específico para La Suerte 12:30 PM (versión aleatoria).</p>
       <div class="random-section">
         <input id="randInput_laSuerte1230" placeholder="Base (opcional)" maxlength="12" />
-        <button onclick="generarRandom('laSuerte1230')">Generar al azar</button>
+        <button onclick="generarRandom('laSuerte1230')">Generar</button>
         <div class="random-results">
           <h5>Quinielas</h5>
           <div id="randQuinielas_laSuerte1230">--</div>
@@ -503,7 +515,7 @@
       <p>Motor de sucesiones específico para La Suerte 6:00 PM (versión aleatoria).</p>
       <div class="random-section">
         <input id="randInput_laSuerte1800" placeholder="Base (opcional)" maxlength="12" />
-        <button onclick="generarRandom('laSuerte1800')">Generar al azar</button>
+        <button onclick="generarRandom('laSuerte1800')">Generar</button>
         <div class="random-results">
           <h5>Quinielas</h5>
           <div id="randQuinielas_laSuerte1800">--</div>
