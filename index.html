@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generador Pro | Motor de Sucesiones Loteka</title>
+  <title>Generador Pro v13 | Motor de Sucesiones Loteka</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
     body{min-height:100vh;background:radial-gradient(circle at top,#14213d,#050505 65%);color:white;padding:20px;display:flex;justify-content:center;align-items:flex-start}
@@ -39,7 +39,7 @@
 <body>
   <div class="container">
     <h1>Generador Pro</h1>
-    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente</div>
+    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente | v13</div>
 
     <div class="panel">
       <h2>Motor de Sucesiones Loteka</h2>
@@ -102,6 +102,16 @@ const HISTORIAL_LOTEKA = [
   Tabla local inicial basada en las consultas vistas de la página de sucesión:
   99, 21 y 94. Para cualquier otro número, el sistema crea una respuesta usando
   el historial local de Loteka y relaciones simples de sucesión/acompañante.
+*/
+/*
+  AQUÍ IREMOS AGREGANDO MÁS NÚMEROS REALES DE LA API.
+  Formato:
+  "00": {
+    secuencias: ["..."],
+    acompanado: ["..."],
+    coincidencia: [],
+    sorteo: "..."
+  }
 */
 const SUCESIONES_LOTEKA = {
   "99": {
@@ -169,7 +179,10 @@ function respuestaFallback(numero){
 }
 
 function obtenerRespuesta(numero){
-  return SUCESIONES_LOTEKA[numero] || respuestaFallback(numero);
+  if(SUCESIONES_LOTEKA[numero]){
+    return {...SUCESIONES_LOTEKA[numero], tipoFuente:"real"};
+  }
+  return {...respuestaFallback(numero), tipoFuente:"local"};
 }
 
 function unicos(arr){ return [...new Set(arr.map(n=>fmt(n)))]; }
@@ -185,6 +198,7 @@ function generarSucesiones(){
   if(!base){ alert("Escribe 3 números. Ejemplo: 992194 o 99 21 94"); return; }
 
   const respuestas = base.map(n => ({numero:n, data:obtenerRespuesta(n)}));
+  const fuentesUsadas = respuestas.map(r => `${r.numero}: ${r.data.tipoFuente === "real" ? "sucesión real" : "base local"}`).join(" | ");
   const scores = {};
   const todasSec = [];
   const todosAcomp = [];
@@ -237,7 +251,7 @@ function generarSucesiones(){
     ? unicos(todasCoin).map(n=>`<span class="pill warn">${n}</span>`).join(" ")
     : `<span class="pill">Sin coincidencia directa</span>`;
 
-  document.getElementById("contador").textContent = `Loteka | Base: ${base.join("-")} | ${ranking.length} candidatos evaluados | Motor: sucesiones + acompañantes + coincidencias`;
+  document.getElementById("contador").textContent = `Loteka | Base: ${base.join("-")} | ${ranking.length} candidatos evaluados | ${fuentesUsadas}`;
 
   const scoreHTML = ranking.slice(0,10).map(x=>`
     <div class="score-row"><span>${x.n}</span><strong>${x.score.toFixed(1)} pts</strong></div>
@@ -246,6 +260,7 @@ function generarSucesiones(){
   document.getElementById("explicacion").innerHTML = `
     <span class="tag">Base Loteka:</span> ${base.join(" - ")}<br>
     <span class="tag">Motor activo:</span> sucesiones históricas + acompañantes + coincidencias.<br>
+    <span class="tag">Fuentes usadas:</span> ${fuentesUsadas}<br>
     <span class="tag">Regla:</span> los números que aparecen repetidos entre sucesiones y acompañantes ganan más fuerza. Los números base se excluyen como jugada final.<br>
     <span class="tag">Ranking interno:</span>
     <div class="score-list">${scoreHTML}</div>
