@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generador Pro v13 | Motor de Sucesiones Loteka</title>
+  <title>Generador Pro v14 | Motor de Sucesiones Loteka</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
     body{min-height:100vh;background:radial-gradient(circle at top,#14213d,#050505 65%);color:white;padding:20px;display:flex;justify-content:center;align-items:flex-start}
@@ -39,7 +39,7 @@
 <body>
   <div class="container">
     <h1>Generador Pro</h1>
-    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente | v13</div>
+    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente | v14</div>
 
     <div class="panel">
       <h2>Motor de Sucesiones Loteka</h2>
@@ -133,6 +133,39 @@ const SUCESIONES_LOTEKA = {
     sorteo: "99-21-94"
   }
 };
+
+/*
+  Tabla de frecuencias calientes para Loteka
+
+  Estas ponderaciones se derivan de un análisis de los números más
+  recurrentes en los periodos de 1, 3 y 6 meses.  El valor de cada
+  clave indica la bonificación que recibirá ese número cuando aparezca
+  como candidato.  Números como "93" se repiten en todos los periodos
+  analizados y por ello tienen el peso más alto.  Otros números,
+  repetidos en dos periodos, tienen un peso intermedio.  Números
+  frecuentes en el histórico de seis meses reciben un peso menor.
+
+  Al añadir nuevos datos de frecuencia, modifique estos valores aquí
+  para ajustar el sesgo del motor de sucesiones.
+*/
+const FRECUENCIA_LOTEKA = {
+  // Núcleo caliente en los tres periodos (1,3,6 meses)
+  "93": 6,
+  // Números fuertes en al menos dos periodos (1 y 3 meses, o 3 y 6 meses)
+  "59": 4,
+  "75": 4,
+  "06": 4,
+  "74": 4,
+  "78": 4,
+  // Números destacados del periodo de 6 meses (fondo)
+  "50": 2,
+  "97": 2,
+  "09": 2,
+  "64": 2,
+  "77": 2,
+  "03": 2
+};
+
 
 function fmt(n){ return (((Number(n) % 100) + 100) % 100).toString().padStart(2,"0"); }
 function inverso(n){ return n.split("").reverse().join(""); }
@@ -232,6 +265,19 @@ function generarSucesiones(){
   // Excluir los números base como jugada directa, pero permitirlos como lectura en coincidencia.
   base.forEach(n=> delete scores[n]);
 
+// Aplicar bonificaciones por frecuencia histórica (calor).  Si el número
+// aparece en la tabla de FRECUENCIA_LOTEKA, se suma su peso al
+// puntaje acumulado y se registra la fuente para mostrarlo en el
+// ranking.  Esto permite destacar números calientes que han
+// aparecido de forma consistente en los periodos de 1, 3 y 6 meses.
+Object.keys(scores).forEach(n => {
+  if (FRECUENCIA_LOTEKA[n]) {
+    scores[n].score += FRECUENCIA_LOTEKA[n];
+    scores[n].fuentes.push(`Frecuencia histórica (+${FRECUENCIA_LOTEKA[n]} pts)`);
+  }
+});
+
+
   const ranking = Object.entries(scores)
     .sort((a,b)=> b[1].score - a[1].score)
     .map(([n,obj])=>({n,score:obj.score,fuentes:obj.fuentes}));
@@ -266,9 +312,9 @@ function generarSucesiones(){
 
   document.getElementById("explicacion").innerHTML = `
     <span class="tag">Base Loteka:</span> ${base.join(" - ")}<br>
-    <span class="tag">Motor activo:</span> sucesiones históricas + acompañantes + coincidencias.<br>
+    <span class="tag">Motor activo:</span> sucesiones históricas + acompañantes + coincidencias + frecuencia caliente.<br>
     <span class="tag">Fuentes usadas:</span> ${fuentesUsadas}<br>
-    <span class="tag">Regla:</span> los números que aparecen repetidos entre sucesiones y acompañantes ganan más fuerza. Los números base se excluyen como jugada final.<br>
+    <span class="tag">Regla:</span> los números repetidos entre sucesiones y acompañantes ganan más fuerza, y los números con mayor frecuencia histórica reciben un bono adicional. Los números base se excluyen como jugada final.<br>
     <span class="tag">Ranking interno:</span>
     <div class="score-list">${scoreHTML}</div>
   `;
