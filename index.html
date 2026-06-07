@@ -224,123 +224,75 @@
       to{transform:translateY(30%);}
     }
 
-  
-    .compat-panel{
-      margin-top:16px;
-      padding:16px;
-      border-radius:20px;
-      background:rgba(0,0,0,.22);
-      border:1px solid rgba(0,245,255,.18);
+    .compat-mini{
+      position:fixed;
+      top:14px;
+      left:14px;
+      z-index:999;
+      max-width:230px;
+      padding:10px 12px;
+      border-radius:14px;
+      background:rgba(5,10,20,.78);
+      border:1px solid rgba(0,245,255,.20);
+      box-shadow:0 0 18px rgba(0,245,255,.10);
+      backdrop-filter:blur(10px);
+      color:#dbeafe;
       text-align:left;
+      font-size:10.5px;
+      line-height:1.45;
+      opacity:.88;
     }
-    .compat-panel h3{
+    .compat-mini-title{
       color:#00f5ff;
-      font-size:18px;
-      margin-bottom:12px;
-      text-align:center;
-    }
-    .compat-section{
-      margin-top:12px;
-      padding-top:10px;
-      border-top:1px solid rgba(255,255,255,.10);
-    }
-    .compat-section:first-of-type{
-      border-top:none;
-      padding-top:0;
-    }
-    .compat-title{
-      display:block;
-      color:#cbd5e1;
-      font-size:12px;
       font-weight:bold;
-      letter-spacing:.5px;
+      font-size:11.5px;
+      margin-bottom:5px;
       text-transform:uppercase;
-      margin-bottom:8px;
+      letter-spacing:.5px;
     }
-    .compat-chip{
-      display:inline-block;
-      padding:7px 10px;
-      border-radius:999px;
-      margin:4px;
-      font-size:12px;
-      font-weight:bold;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.08);
-      color:#e5e7eb;
+    .compat-mini b{
+      color:#fff;
     }
-    .compat-chip.muy-alta{
-      background:rgba(34,197,94,.18);
-      border-color:rgba(34,197,94,.45);
-      color:#dcfce7;
-      box-shadow:0 0 12px rgba(34,197,94,.16);
+    body.claro .compat-mini{
+      background:rgba(255,255,255,.86);
+      border:1px solid #cbd5e1;
+      color:#334155;
+      box-shadow:0 0 18px rgba(15,23,42,.10);
     }
-    .compat-chip.alta{
-      background:rgba(0,245,255,.14);
-      border-color:rgba(0,245,255,.32);
-      color:#dffcff;
-    }
-    .compat-chip.media{
-      background:rgba(250,204,21,.14);
-      border-color:rgba(250,204,21,.34);
-      color:#fef9c3;
-    }
-    .compat-chip.baja{
-      background:rgba(248,113,113,.12);
-      border-color:rgba(248,113,113,.28);
-      color:#fee2e2;
-    }
-    body.claro .compat-panel{
-      background:#f8fafc;
-      border:1px solid #dbe3ee;
+    body.claro .compat-mini b{
       color:#111827;
     }
-    body.claro .compat-title{
-      color:#475569;
-    }
-    body.claro .compat-chip{
-      color:#111827;
+    @media(max-width:760px){
+      .compat-mini{
+        position:static;
+        max-width:100%;
+        margin:0 0 12px 0;
+        font-size:10px;
+      }
     }
 
   </style>
 </head>
 <body>
+
+  <div class="compat-mini" id="compatMini">
+    <div class="compat-mini-title">Compatibles</div>
+    <div><b>Muy alta:</b> Loteka · La Suerte 12:30</div>
+    <div><b>Alta:</b> Primera Noche · La Suerte 6:00 PM</div>
+    <div><b>Media:</b> Real · Gana Más</div>
+    <div><b>Baja:</b> Nacional · La Primera Día</div>
+  </div>
+
   <div class="container">
     <h1>Generador Pro</h1>
 <button id="temaBtn" class="theme-toggle" type="button">☀️ Modo claro</button>
     <!-- Updated version indicator to v15. -->
-    <div class="sub">🔥 Motor de Sucesiones — <b>Compatibilidad Muy Alta</b> | v18</div>
+    <div class="sub">🔥 Motor de Sucesiones — <b>Compatibilidad Muy Alta</b> | v19</div>
 
-    <div class="compat-panel">
-      <h3>Loterías compatibles detectadas</h3>
-
-      <div class="compat-section">
-        <span class="compat-title">Muy Alta</span>
-        <span class="compat-chip muy-alta">Loteka</span>
-        <span class="compat-chip muy-alta">La Suerte 12:30</span>
-      </div>
-
-      <div class="compat-section">
-        <span class="compat-title">Alta</span>
-        <span class="compat-chip alta">Primera Noche</span>
-        <span class="compat-chip alta">La Suerte 6:00 PM</span>
-      </div>
-
-      <div class="compat-section">
-        <span class="compat-title">Media</span>
-        <span class="compat-chip media">Real</span>
-        <span class="compat-chip media">Gana Más</span>
-      </div>
-
-      <div class="compat-section">
-        <span class="compat-title">Baja / Observación</span>
-        <span class="compat-chip baja">Nacional</span>
-        <span class="compat-chip baja">La Primera Día</span>
-      </div>
-    </div>
-
+    
 
     <div class="panel">
-      <h2>Motor de Sucesiones Loteka</h2>
+      <h2>Motor de Sucesiones</h2>
       <p>
         Escribe el último sorteo base. El sistema usa sucesiones, acompañantes, coincidencias, frecuencia caliente y compatibilidad por lotería detectada.
       </p>
