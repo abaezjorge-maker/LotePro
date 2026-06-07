@@ -245,11 +245,18 @@ function generarSucesiones(){
   document.getElementById("pales").innerHTML = pales.map(p=>`<div class="item">${p.join(" - ")}</div>`).join("") || `<div class="item">--</div>`;
   document.getElementById("tripletas").innerHTML = tripletas.map(t=>`<div class="item">${t.join(" - ")}</div>`).join("") || `<div class="item">--</div>`;
 
-  document.getElementById("listaSucesiones").innerHTML = unicos(todasSec).slice(0,18).map(n=>`<span class="pill">${n}</span>`).join(" ");
-  document.getElementById("listaAcompanantes").innerHTML = unicos(todosAcomp).slice(0,18).map(n=>`<span class="pill hot">${n}</span>`).join(" ");
-  document.getElementById("listaCoincidencias").innerHTML = unicos(todasCoin).length
-    ? unicos(todasCoin).map(n=>`<span class="pill warn">${n}</span>`).join(" ")
-    : `<span class="pill">Sin coincidencia directa</span>`;
+  document.getElementById("listaSucesiones").innerHTML = unicos(todasSec).slice(0,6).map(n=>`<span class="pill">${n}</span>`).join(" ");
+  document.getElementById("listaAcompanantes").innerHTML = unicos(todosAcomp).slice(0,6).map(n=>`<span class="pill hot">${n}</span>`).join(" ");
+  const coincidenciasReducidas = unicos(todasCoin).slice(0,3);
+  const cajaCoincidencias = document.getElementById("listaCoincidencias").parentElement;
+  if(coincidenciasReducidas.length){
+    cajaCoincidencias.style.display = "block";
+    document.getElementById("listaCoincidencias").innerHTML = coincidenciasReducidas
+      .map(n=>`<span class="pill warn">${n}</span>`)
+      .join(" ");
+  }else{
+    cajaCoincidencias.style.display = "none";
+  }
 
   document.getElementById("contador").textContent = `Loteka | Base: ${base.join("-")} | ${ranking.length} candidatos evaluados | ${fuentesUsadas}`;
 
