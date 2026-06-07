@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador Pro | Motor de Sucesiones Loteka</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{min-height:100vh;background:radial-gradient(circle at top,#14213d,#050505 65%);color:white;padding:20px;display:flex;justify-content:center;align-items:flex-start}
+    .container{width:100%;max-width:720px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:28px;padding:35px 25px;text-align:center;box-shadow:0 0 40px rgba(0,245,255,.18);backdrop-filter:blur(12px)}
+    h1{font-size:42px;margin-bottom:10px;background:linear-gradient(90deg,#00f5ff,#fff,#ff00ff);-webkit-background-clip:text;color:transparent}
+    .sub{color:#cbd5e1;font-size:14px;line-height:1.6;margin-bottom:22px}
+    .panel{margin-top:18px;padding:18px;border-radius:20px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.12)}
+    h2{font-size:22px;margin-bottom:12px;color:#00f5ff}
+    p{color:#ddd;font-size:14px;line-height:1.6;margin:8px 0 16px}
+    input{width:100%;padding:15px;border-radius:16px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.12);color:white;font-size:18px;outline:none;text-align:center;margin-bottom:12px;font-weight:bold;letter-spacing:1px}
+    input::placeholder{color:rgba(255,255,255,.55);font-weight:normal}
+    button{width:100%;padding:15px;border:none;border-radius:18px;background:linear-gradient(90deg,#00f5ff,#ff00ff);color:white;font-size:16px;font-weight:bold;cursor:pointer;transition:.25s}
+    button:hover{transform:scale(1.03);box-shadow:0 0 25px rgba(0,245,255,.5)}
+    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
+    .card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:15px}
+    .card h3{color:#00f5ff;margin-bottom:10px;font-size:18px}
+    .items{display:grid;grid-template-columns:1fr;gap:8px}
+    .item{background:rgba(0,0,0,.25);border-radius:12px;padding:10px;font-weight:bold;font-size:19px;letter-spacing:1px}
+    .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px;text-align:left}
+    .mini-card{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px}
+    .mini-card h4{color:#00f5ff;margin-bottom:8px;text-align:center}
+    .pill{display:inline-block;background:rgba(0,245,255,.12);border:1px solid rgba(0,245,255,.18);padding:6px 10px;border-radius:999px;margin:3px;color:#dffcff;font-size:13px;font-weight:bold}
+    .hot{background:rgba(34,197,94,.16);border-color:rgba(34,197,94,.3);color:#dcfce7}
+    .warn{background:rgba(250,204,21,.13);border-color:rgba(250,204,21,.28);color:#fef9c3}
+    .small{font-size:12px;color:#aaa;margin-top:10px;line-height:1.5}
+    .explain{margin-top:16px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:14px;text-align:left;color:#ddd;font-size:14px;line-height:1.6}
+    .tag{color:#00f5ff;font-weight:bold}
+    .score-list{margin-top:8px;text-align:left}
+    .score-row{display:flex;justify-content:space-between;gap:10px;background:rgba(0,0,0,.22);border-radius:10px;padding:7px 10px;margin:6px 0;color:#dbeafe;font-size:13px}
+    @media(max-width:520px){h1{font-size:34px}.container{padding:28px 18px}.item{font-size:17px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Generador Pro</h1>
+    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente</div>
+
+    <div class="panel">
+      <h2>Motor de Sucesiones Loteka</h2>
+      <p>
+        Escribe el último sorteo de Loteka. El sistema usa sucesiones, acompañantes, coincidencias y una tabla local basada en consultas históricas detectadas.
+      </p>
+
+      <input id="baseResultado" placeholder="Ej: 992194 o 99 21 94" maxlength="12" />
+      <button onclick="generarSucesiones()">Generar por Sucesiones</button>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Quinielas fuertes</h3>
+          <div class="items" id="quinielas"><div class="item">--</div></div>
+        </div>
+        <div class="card">
+          <h3>Palés fuertes</h3>
+          <div class="items" id="pales"><div class="item">--</div></div>
+        </div>
+        <div class="card">
+          <h3>Tripletas fuertes</h3>
+          <div class="items" id="tripletas"><div class="item">--</div></div>
+        </div>
+      </div>
+
+      <div class="small" id="contador">Esperando resultado base...</div>
+    </div>
+
+    <div class="panel">
+      <h2>Lectura del motor</h2>
+      <div class="mini-grid">
+        <div class="mini-card">
+          <h4>Sucesiones</h4>
+          <div id="listaSucesiones"><span class="pill">--</span></div>
+        </div>
+        <div class="mini-card">
+          <h4>Acompañantes</h4>
+          <div id="listaAcompanantes"><span class="pill">--</span></div>
+        </div>
+        <div class="mini-card">
+          <h4>Coincidencias</h4>
+          <div id="listaCoincidencias"><span class="pill">--</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="explain" id="explicacion">
+      <span class="tag">Sistema:</span> esperando generación...
+    </div>
+  </div>
+
+<script>
+const HISTORIAL_LOTEKA = [
+  ["99","21","94"],["00","15","75"],["14","41","59"],["93","57","32"],["62","44","83"],
+  ["97","85","65"],["02","50","31"],["29","85","81"],["77","32","35"],["75","65","16"],
+  ["88","28","33"],["10","01","94"],["21","68","48"],["19","29","68"],["37","19","77"]
+];
+
+/*
+  Tabla local inicial basada en las consultas vistas de la página de sucesión:
+  99, 21 y 94. Para cualquier otro número, el sistema crea una respuesta usando
+  el historial local de Loteka y relaciones simples de sucesión/acompañante.
+*/
+const SUCESIONES_LOTEKA = {
+  "99": {
+    secuencias: ["69","84","02","50","64","97","61","94","53","41"],
+    acompanado: ["53","78","47","61","65","64","70","15","93","19"],
+    coincidencia: ["94"],
+    sorteo: "99-21-94"
+  },
+  "21": {
+    secuencias: ["61","50","49","95","26","32","51","48","10","67"],
+    acompanado: ["27","67","81","86","03","48","12","63","28","54"],
+    coincidencia: [],
+    sorteo: "99-21-94"
+  },
+  "94": {
+    secuencias: ["54","09","27","10","04","50","29","32","87","88"],
+    acompanado: ["26","05","67","92","12","63","28","54","97","53"],
+    coincidencia: [],
+    sorteo: "99-21-94"
+  }
+};
+
+function fmt(n){ return (((Number(n) % 100) + 100) % 100).toString().padStart(2,"0"); }
+function inverso(n){ return n.split("").reverse().join(""); }
+function parseBase(){
+  const raw = document.getElementById("baseResultado").value.trim();
+  const limpio = raw.replace(/\D/g, "");
+  if(limpio.length === 6) return [limpio.slice(0,2), limpio.slice(2,4), limpio.slice(4,6)];
+  const nums = raw.match(/\d{1,2}/g) || [];
+  const out = nums.slice(0,3).map(x => x.padStart(2,"0"));
+  return out.length === 3 ? out : null;
+}
+
+function derivadoSuave(n){
+  const x = parseInt(n,10);
+  return [fmt(x+1),fmt(x-1),inverso(n),fmt(x+10),fmt(x-10)];
+}
+
+function respuestaFallback(numero){
+  const sec = [];
+  const acomp = [];
+
+  // Sucesión real desde el historial local: si aparece en un sorteo viejo, toma números del siguiente más reciente.
+  for(let i=HISTORIAL_LOTEKA.length-1;i>0;i--){
+    const sorteoViejo = HISTORIAL_LOTEKA[i];
+    const siguiente = HISTORIAL_LOTEKA[i-1];
+    if(sorteoViejo.includes(numero)) siguiente.forEach(n=>sec.push(n));
+  }
+
+  // Acompañantes: números que salieron en el mismo sorteo.
+  HISTORIAL_LOTEKA.forEach(s=>{
+    if(s.includes(numero)) s.forEach(n=>{ if(n!==numero) acomp.push(n); });
+  });
+
+  // Si no hay suficiente historial, agrega derivados suaves.
+  if(sec.length < 5) sec.push(...derivadoSuave(numero));
+  if(acomp.length < 5) acomp.push(...derivadoSuave(inverso(numero)));
+
+  return {
+    secuencias: unicos(sec).slice(0,10),
+    acompanado: unicos(acomp).slice(0,10),
+    coincidencia: [],
+    sorteo: "Base local Loteka"
+  };
+}
+
+function obtenerRespuesta(numero){
+  return SUCESIONES_LOTEKA[numero] || respuestaFallback(numero);
+}
+
+function unicos(arr){ return [...new Set(arr.map(n=>fmt(n)))]; }
+function sumarScore(scores, n, puntos, fuente){
+  n = fmt(n);
+  scores[n] ??= {score:0, fuentes:[]};
+  scores[n].score += puntos;
+  scores[n].fuentes.push(fuente);
+}
+
+function generarSucesiones(){
+  const base = parseBase();
+  if(!base){ alert("Escribe 3 números. Ejemplo: 992194 o 99 21 94"); return; }
+
+  const respuestas = base.map(n => ({numero:n, data:obtenerRespuesta(n)}));
+  const scores = {};
+  const todasSec = [];
+  const todosAcomp = [];
+  const todasCoin = [];
+
+  respuestas.forEach(({numero,data})=>{
+    data.secuencias.forEach((n,idx)=>{
+      todasSec.push(n);
+      sumarScore(scores,n, 12 - Math.min(idx,8), `Secuencia de ${numero}`);
+    });
+
+    data.acompanado.forEach((n,idx)=>{
+      todosAcomp.push(n);
+      sumarScore(scores,n, 8 - Math.min(idx,6), `Acompañante de ${numero}`);
+    });
+
+    data.coincidencia.forEach(n=>{
+      todasCoin.push(n);
+      sumarScore(scores,n, 14, `Coincidencia detectada`);
+    });
+  });
+
+  // Bonos por repetición entre secuencias y acompañantes.
+  const repetidos = [...todasSec, ...todosAcomp, ...todasCoin];
+  const conteo = {};
+  repetidos.forEach(n=> conteo[fmt(n)] = (conteo[fmt(n)] || 0) + 1);
+  Object.entries(conteo).forEach(([n,c])=>{
+    if(c >= 2) sumarScore(scores,n, c * 5, `Repetición x${c}`);
+  });
+
+  // Excluir los números base como jugada directa, pero permitirlos como lectura en coincidencia.
+  base.forEach(n=> delete scores[n]);
+
+  const ranking = Object.entries(scores)
+    .sort((a,b)=> b[1].score - a[1].score)
+    .map(([n,obj])=>({n,score:obj.score,fuentes:obj.fuentes}));
+
+  const top = ranking.map(x=>x.n);
+  const quinielas = top.slice(0,3);
+  const pales = crearPales(top, scores).slice(0,3);
+  const tripletas = crearTripletas(top, scores).slice(0,3);
+
+  document.getElementById("quinielas").innerHTML = quinielas.map(n=>`<div class="item">${n}</div>`).join("") || `<div class="item">--</div>`;
+  document.getElementById("pales").innerHTML = pales.map(p=>`<div class="item">${p.join(" - ")}</div>`).join("") || `<div class="item">--</div>`;
+  document.getElementById("tripletas").innerHTML = tripletas.map(t=>`<div class="item">${t.join(" - ")}</div>`).join("") || `<div class="item">--</div>`;
+
+  document.getElementById("listaSucesiones").innerHTML = unicos(todasSec).slice(0,18).map(n=>`<span class="pill">${n}</span>`).join(" ");
+  document.getElementById("listaAcompanantes").innerHTML = unicos(todosAcomp).slice(0,18).map(n=>`<span class="pill hot">${n}</span>`).join(" ");
+  document.getElementById("listaCoincidencias").innerHTML = unicos(todasCoin).length
+    ? unicos(todasCoin).map(n=>`<span class="pill warn">${n}</span>`).join(" ")
+    : `<span class="pill">Sin coincidencia directa</span>`;
+
+  document.getElementById("contador").textContent = `Loteka | Base: ${base.join("-")} | ${ranking.length} candidatos evaluados | Motor: sucesiones + acompañantes + coincidencias`;
+
+  const scoreHTML = ranking.slice(0,10).map(x=>`
+    <div class="score-row"><span>${x.n}</span><strong>${x.score.toFixed(1)} pts</strong></div>
+  `).join("");
+
+  document.getElementById("explicacion").innerHTML = `
+    <span class="tag">Base Loteka:</span> ${base.join(" - ")}<br>
+    <span class="tag">Motor activo:</span> sucesiones históricas + acompañantes + coincidencias.<br>
+    <span class="tag">Regla:</span> los números que aparecen repetidos entre sucesiones y acompañantes ganan más fuerza. Los números base se excluyen como jugada final.<br>
+    <span class="tag">Ranking interno:</span>
+    <div class="score-list">${scoreHTML}</div>
+  `;
+}
+
+function crearPales(top, scores){
+  const pool = top.slice(0,8);
+  const pares = [];
+  for(let i=0;i<pool.length;i++){
+    for(let j=i+1;j<pool.length;j++){
+      const a=pool[i], b=pool[j];
+      const bonus = (a[0]!==b[0] ? 2 : 0) + (a[1]===b[1] ? 1 : 0);
+      pares.push({arr:[a,b], score:(scores[a]?.score||0)+(scores[b]?.score||0)+bonus});
+    }
+  }
+  return pares.sort((x,y)=>y.score-x.score).map(x=>x.arr);
+}
+
+function crearTripletas(top, scores){
+  const pool = top.slice(0,8);
+  const tris = [];
+  for(let i=0;i<pool.length;i++){
+    for(let j=i+1;j<pool.length;j++){
+      for(let k=j+1;k<pool.length;k++){
+        const a=pool[i], b=pool[j], c=pool[k];
+        const familias = new Set([a[0],b[0],c[0]]).size;
+        tris.push({arr:[a,b,c], score:(scores[a]?.score||0)+(scores[b]?.score||0)+(scores[c]?.score||0)+(familias*2)});
+      }
+    }
+  }
+  return tris.sort((x,y)=>y.score-x.score).map(x=>x.arr);
+}
+
+document.getElementById("baseResultado").addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    e.preventDefault();
+    generarSucesiones();
+  }
+});
+</script>
+</body>
+</html>
