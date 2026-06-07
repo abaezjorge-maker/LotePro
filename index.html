@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Updated title to reflect new version of the Motor de Sucesiones. -->
-  <title>Generador Pro v15 | Motor de Sucesiones Loteka</title>
+  <title>Generador Pro v17 | Motor de Sucesiones Loteka Matrix Cube</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
     body{min-height:100vh;background:radial-gradient(circle at top,#14213d,#050505 65%);color:white;padding:20px;display:flex;justify-content:center;align-items:flex-start}
@@ -102,6 +102,128 @@
       border:1px solid #cbd5e1;
     }
 
+
+    /* Matrix Cube Loader */
+    .matrix-loader{
+      display:none;
+      margin:18px auto 6px;
+      padding:18px 12px;
+      border-radius:20px;
+      background:rgba(0,0,0,.22);
+      border:1px solid rgba(0,245,255,.18);
+      box-shadow:0 0 25px rgba(0,245,255,.12) inset;
+      overflow:hidden;
+      position:relative;
+    }
+    .matrix-loader.activo{display:block;}
+    .matrix-loader::before{
+      content:"0101 97 74 68 64 70 1010 78 42 65 14 12";
+      position:absolute;
+      inset:0;
+      color:rgba(0,255,136,.10);
+      font-size:12px;
+      letter-spacing:4px;
+      line-height:22px;
+      word-break:break-all;
+      animation:matrixRain 3s linear infinite;
+      pointer-events:none;
+    }
+    .cube-scene{
+      width:120px;
+      height:120px;
+      margin:0 auto;
+      perspective:800px;
+      position:relative;
+      z-index:2;
+    }
+    .rubik-cube{
+      width:86px;
+      height:86px;
+      position:relative;
+      margin:17px auto;
+      transform-style:preserve-3d;
+      animation:cubeSpin 1.8s linear infinite;
+    }
+    .cube-face{
+      position:absolute;
+      width:86px;
+      height:86px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      grid-template-rows:repeat(3,1fr);
+      gap:4px;
+      padding:5px;
+      background:rgba(2,6,23,.88);
+      border:1px solid rgba(0,245,255,.55);
+      box-shadow:0 0 18px rgba(0,245,255,.35);
+    }
+    .cube-face span{
+      display:block;
+      border-radius:5px;
+      background:linear-gradient(135deg,#00ff88,#00f5ff);
+      box-shadow:0 0 10px rgba(0,255,136,.55);
+      animation:tilePulse 900ms ease-in-out infinite alternate;
+    }
+    .cube-face span:nth-child(2n){background:linear-gradient(135deg,#ff00ff,#00f5ff);animation-delay:.15s;}
+    .cube-face span:nth-child(3n){background:linear-gradient(135deg,#facc15,#00ff88);animation-delay:.30s;}
+    .cube-face.front{transform:rotateY(0deg) translateZ(43px);}
+    .cube-face.back{transform:rotateY(180deg) translateZ(43px);}
+    .cube-face.right{transform:rotateY(90deg) translateZ(43px);}
+    .cube-face.left{transform:rotateY(-90deg) translateZ(43px);}
+    .cube-face.top{transform:rotateX(90deg) translateZ(43px);}
+    .cube-face.bottom{transform:rotateX(-90deg) translateZ(43px);}
+    .matrix-text{
+      position:relative;
+      z-index:2;
+      color:#00f5ff;
+      font-weight:bold;
+      font-size:13px;
+      letter-spacing:.5px;
+      margin-top:10px;
+      animation:loaderBlink 1s ease-in-out infinite;
+    }
+    .matrix-steps{
+      position:relative;
+      z-index:2;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:7px;
+      margin-top:10px;
+    }
+    .matrix-steps span{
+      font-size:11px;
+      padding:5px 8px;
+      border-radius:999px;
+      background:rgba(0,245,255,.10);
+      border:1px solid rgba(0,245,255,.22);
+      color:#dffcff;
+    }
+    body.claro .matrix-loader{
+      background:#eef6ff;
+      border-color:#cbd5e1;
+      box-shadow:0 0 25px rgba(15,23,42,.08) inset;
+    }
+    body.claro .matrix-steps span{color:#0f172a;background:#e0f2fe;}
+    @keyframes cubeSpin{
+      0%{transform:rotateX(-22deg) rotateY(0deg) rotateZ(0deg);}
+      35%{transform:rotateX(35deg) rotateY(160deg) rotateZ(8deg);}
+      70%{transform:rotateX(-18deg) rotateY(300deg) rotateZ(-8deg);}
+      100%{transform:rotateX(-22deg) rotateY(360deg) rotateZ(0deg);}
+    }
+    @keyframes tilePulse{
+      from{opacity:.45;transform:scale(.88);filter:saturate(.8);}
+      to{opacity:1;transform:scale(1);filter:saturate(1.5);}
+    }
+    @keyframes loaderBlink{
+      0%,100%{opacity:.45;}
+      50%{opacity:1;}
+    }
+    @keyframes matrixRain{
+      from{transform:translateY(-30%);}
+      to{transform:translateY(30%);}
+    }
+
   </style>
 </head>
 <body>
@@ -109,7 +231,7 @@
     <h1>Generador Pro</h1>
 <button id="temaBtn" class="theme-toggle" type="button">☀️ Modo claro</button>
     <!-- Updated version indicator to v15. -->
-    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente | v15 · Claro/Oscuro</div>
+    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente | v17 · Matrix Cube · Claro/Oscuro</div>
 
     <div class="panel">
       <h2>Motor de Sucesiones Loteka</h2>
@@ -119,6 +241,27 @@
 
       <input id="baseResultado" placeholder="Ej: 992194 o 99 21 94" maxlength="12" />
       <button onclick="generarSucesiones()">Generar por Sucesiones</button>
+
+      <div id="matrixLoader" class="matrix-loader" aria-live="polite">
+        <div class="cube-scene">
+          <div class="rubik-cube">
+            <div class="cube-face front"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="cube-face back"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="cube-face right"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="cube-face left"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="cube-face top"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div class="cube-face bottom"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+        </div>
+        <div class="matrix-text">Analizando sucesiones Matrix...</div>
+        <div class="matrix-steps">
+          <span>Sucesiones</span>
+          <span>Acompañantes</span>
+          <span>Frecuencias</span>
+          <span>Núcleo</span>
+        </div>
+      </div>
+
 
       <div class="grid">
         <div class="card">
@@ -745,22 +888,37 @@ const SUCESIONES_LOTEKA = {
   para ajustar el sesgo del motor de sucesiones.
 */
 const FRECUENCIA_LOTEKA = {
-  "93": 2,
-  "59": 2,
-  "75": 2,
-  "06": 2,
+  // Calientes de 30 días (peso alto)
+  "21": 4,
+  "75": 4,
+  "59": 4,
+  "68": 6, // ya tenía peso alto por sucesiones
+  "06": 4,
+  "94": 4,
+  "14": 4,
+  "41": 3,
+
+  // Calientes de 60 días (peso medio)
+  "93": 4,
+  "32": 3,
+  "65": 4,
+  "98": 3,
+
+  // Calientes históricos (peso bajo)
+  "97": 6, // mantiene peso máximo por recurrencia
+  "08": 2,
+  "82": 2,
+  "81": 2,
+
+  // Otros números detectados en múltiples tablas de sucesión
   "74": 4,
   "78": 4,
   "50": 2,
-  "97": 6,
   "09": 2,
   "64": 6,
   "77": 2,
   "03": 2,
-  "68": 6,
   "42": 4,
-  "65": 4,
-  "14": 4,
   "12": 4,
   "70": 6
 };
@@ -833,7 +991,22 @@ function sumarScore(scores, n, puntos, fuente){
   scores[n].fuentes.push(fuente);
 }
 
+
 function generarSucesiones(){
+  const loader = document.getElementById("matrixLoader");
+  if(loader){
+    loader.classList.add("activo");
+  }
+
+  setTimeout(()=>{
+    ejecutarGeneracionSucesiones();
+    if(loader){
+      setTimeout(()=>loader.classList.remove("activo"), 450);
+    }
+  }, 850);
+}
+
+function ejecutarGeneracionSucesiones(){
   const base = parseBase();
   if(!base){ alert("Escribe 3 números. Ejemplo: 992194 o 99 21 94"); return; }
 
@@ -929,7 +1102,7 @@ Object.keys(scores).forEach(n => {
 
   document.getElementById("explicacion").innerHTML = `
     <span class="tag">Base Loteka:</span> ${base.join(" - ")}<br>
-    <span class="tag">Motor activo:</span> sucesiones históricas + acompañantes + coincidencias + frecuencia caliente.<br>
+    <span class="tag">Motor activo:</span> sucesiones históricas + acompañantes + coincidencias + frecuencia caliente + Matrix Cube.<br>
     <span class="tag">Fuentes usadas:</span> ${fuentesUsadas}<br>
     <span class="tag">Regla:</span> los números repetidos entre sucesiones y acompañantes ganan más fuerza, y los números con mayor frecuencia histórica reciben un bono adicional. Los números base se excluyen como jugada final.<br>
     <span class="tag">Ranking interno:</span>
