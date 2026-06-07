@@ -320,7 +320,7 @@
     <h1>Generador Pro</h1>
 <button id="temaBtn" class="theme-toggle" type="button">☀️ Modo claro</button>
     <!-- Updated version indicator to v15. -->
-    <div class="sub">🔥 Motor de Sucesiones — <b>Compatibilidad Muy Alta</b> | v19</div>
+    <div class="sub">🔥 Motor de Sucesiones — <b>Compatibilidad Muy Alta</b> | v20</div>
 
     
 
@@ -393,6 +393,127 @@
     <div class="explain" id="explicacion">
       <span class="tag">Sistema:</span> esperando generación...
     </div>
+  </div>
+
+  <!-- Secciones colapsables para otros motores de lotería.
+       Estas secciones permiten añadir motores específicos para cada
+       lotería sin alargar excesivamente la página.  Cada motor se
+       podrá activar más adelante cuando se disponga de la lógica y
+       datos correspondientes. -->
+  <div class="panel">
+    <h2>Otros motores</h2>
+    <details>
+      <summary>Motor La Primera Día</summary>
+      <p>Motor de sucesiones específico para La Primera Día (versión aleatoria).</p>
+      <div class="random-section">
+        <input id="randInput_laPrimeraDia" placeholder="Base (opcional)" maxlength="12" />
+        <button onclick="generarRandom('laPrimeraDia')">Generar al azar</button>
+        <div class="random-results">
+          <h5>Quinielas</h5>
+          <div id="randQuinielas_laPrimeraDia">--</div>
+          <h5>Palés</h5>
+          <div id="randPales_laPrimeraDia">--</div>
+          <h5>Tripletas</h5>
+          <div id="randTripletas_laPrimeraDia">--</div>
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Motor La Primera Noche</summary>
+      <p>Motor de sucesiones específico para La Primera Noche (versión aleatoria).</p>
+      <div class="random-section">
+        <input id="randInput_laPrimeraNoche" placeholder="Base (opcional)" maxlength="12" />
+        <button onclick="generarRandom('laPrimeraNoche')">Generar al azar</button>
+        <div class="random-results">
+          <h5>Quinielas</h5>
+          <div id="randQuinielas_laPrimeraNoche">--</div>
+          <h5>Palés</h5>
+          <div id="randPales_laPrimeraNoche">--</div>
+          <h5>Tripletas</h5>
+          <div id="randTripletas_laPrimeraNoche">--</div>
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Motor Nacional</summary>
+      <p>Motor de sucesiones específico para Nacional (versión aleatoria).</p>
+      <div class="random-section">
+        <input id="randInput_nacional" placeholder="Base (opcional)" maxlength="12" />
+        <button onclick="generarRandom('nacional')">Generar al azar</button>
+        <div class="random-results">
+          <h5>Quinielas</h5>
+          <div id="randQuinielas_nacional">--</div>
+          <h5>Palés</h5>
+          <div id="randPales_nacional">--</div>
+          <h5>Tripletas</h5>
+          <div id="randTripletas_nacional">--</div>
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Motor Real</summary>
+      <p>Motor de sucesiones específico para Real (versión aleatoria).</p>
+      <div class="random-section">
+        <input id="randInput_real" placeholder="Base (opcional)" maxlength="12" />
+        <button onclick="generarRandom('real')">Generar al azar</button>
+        <div class="random-results">
+          <h5>Quinielas</h5>
+          <div id="randQuinielas_real">--</div>
+          <h5>Palés</h5>
+          <div id="randPales_real">--</div>
+          <h5>Tripletas</h5>
+          <div id="randTripletas_real">--</div>
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Motor Gana Más</summary>
+      <p>Motor de sucesiones específico para Gana Más (versión aleatoria).</p>
+      <div class="random-section">
+        <input id="randInput_ganaMas" placeholder="Base (opcional)" maxlength="12" />
+        <button onclick="generarRandom('ganaMas')">Generar al azar</button>
+        <div class="random-results">
+          <h5>Quinielas</h5>
+          <div id="randQuinielas_ganaMas">--</div>
+          <h5>Palés</h5>
+          <div id="randPales_ganaMas">--</div>
+          <h5>Tripletas</h5>
+          <div id="randTripletas_ganaMas">--</div>
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Motor La Suerte 12:30</summary>
+      <p>Motor de sucesiones específico para La Suerte 12:30 PM (versión aleatoria).</p>
+      <div class="random-section">
+        <input id="randInput_laSuerte1230" placeholder="Base (opcional)" maxlength="12" />
+        <button onclick="generarRandom('laSuerte1230')">Generar al azar</button>
+        <div class="random-results">
+          <h5>Quinielas</h5>
+          <div id="randQuinielas_laSuerte1230">--</div>
+          <h5>Palés</h5>
+          <div id="randPales_laSuerte1230">--</div>
+          <h5>Tripletas</h5>
+          <div id="randTripletas_laSuerte1230">--</div>
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Motor La Suerte 6:00 PM</summary>
+      <p>Motor de sucesiones específico para La Suerte 6:00 PM (versión aleatoria).</p>
+      <div class="random-section">
+        <input id="randInput_laSuerte1800" placeholder="Base (opcional)" maxlength="12" />
+        <button onclick="generarRandom('laSuerte1800')">Generar al azar</button>
+        <div class="random-results">
+          <h5>Quinielas</h5>
+          <div id="randQuinielas_laSuerte1800">--</div>
+          <h5>Palés</h5>
+          <div id="randPales_laSuerte1800">--</div>
+          <h5>Tripletas</h5>
+          <div id="randTripletas_laSuerte1800">--</div>
+        </div>
+      </div>
+    </details>
   </div>
 
 <script>
@@ -1269,6 +1390,52 @@ document.addEventListener("DOMContentLoaded", function(){
 
   actualizarBotonTema();
 });
+
+
+// ---------------------------------------------
+// Generador aleatorio para motores secundarios.
+// Dado un identificador de motor (key), genera combinaciones de
+// quinielas, palés y tripletas usando números de dos dígitos entre 00 y 99.
+// Se permite ingresar una base opcional en el campo de texto; los números de
+// la base se conservan y se completan hasta tres con valores aleatorios únicos.
+// Las palés y tripletas se forman a partir de esos números.
+function generarRandom(key){
+  const inputEl = document.getElementById('randInput_' + key);
+  let baseStr = inputEl ? inputEl.value.trim() : '';
+  let nums = baseStr.split(/[^0-9]/).filter(x => x !== '');
+  let baseNums = [];
+  nums.forEach(n => {
+    let formatted = n.padStart(2,'0').slice(-2);
+    if(!baseNums.includes(formatted)) baseNums.push(formatted);
+  });
+  while(baseNums.length < 3){
+    const rand = Math.floor(Math.random()*100).toString().padStart(2,'0');
+    if(!baseNums.includes(rand)) baseNums.push(rand);
+  }
+  baseNums = baseNums.slice(0,3);
+  const quinielas = baseNums.slice(0,3);
+  const pales = [];
+  for(let i=0;i<baseNums.length;i++){
+    for(let j=i+1;j<baseNums.length;j++){
+      pales.push([baseNums[i], baseNums[j]]);
+    }
+  }
+  const palesTop = pales.slice(0,3);
+  const [n1,n2,n3] = baseNums;
+  const tripletas = [
+    [n1,n2,n3],
+    [n1,n3,n2],
+    [n2,n3,n1]
+  ];
+  const quinCont = document.getElementById('randQuinielas_' + key);
+  const paleCont = document.getElementById('randPales_' + key);
+  const triCont = document.getElementById('randTripletas_' + key);
+  if(quinCont) quinCont.innerHTML = quinielas.map(n => `<div class="item">${n}</div>`).join('') || '--';
+  if(paleCont) paleCont.innerHTML = palesTop.map(p => `<div class="item">${p[0]} - ${p[1]}</div>`).join('') || '--';
+  if(triCont) triCont.innerHTML = tripletas.map(t => `<div class="item">${t[0]} - ${t[1]} - ${t[2]}</div>`).join('') || '--';
+}
+
+
 
 </script>
 </body>
