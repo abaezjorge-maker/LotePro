@@ -35,13 +35,81 @@
     .score-list{margin-top:8px;text-align:left}
     .score-row{display:flex;justify-content:space-between;gap:10px;background:rgba(0,0,0,.22);border-radius:10px;padding:7px 10px;margin:6px 0;color:#dbeafe;font-size:13px}
     @media(max-width:520px){h1{font-size:34px}.container{padding:28px 18px}.item{font-size:17px}}
+
+    .theme-toggle{
+      width:auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      margin:0 auto 16px;
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+      font-size:14px;
+      font-weight:bold;
+      cursor:pointer;
+      box-shadow:none;
+    }
+    .theme-toggle:hover{
+      transform:scale(1.03);
+      box-shadow:0 0 18px rgba(0,245,255,.25);
+    }
+
+    body.claro{
+      background:linear-gradient(180deg,#f8fbff,#eef3fb);
+      color:#111827;
+    }
+    body.claro .container{
+      background:#ffffff;
+      color:#111827;
+      border:1px solid #dbe3ee;
+      box-shadow:0 0 35px rgba(15,23,42,.10);
+    }
+    body.claro .panel,
+    body.claro .card,
+    body.claro .mini-card,
+    body.claro .explain{
+      background:#f8fafc;
+      color:#111827;
+      border:1px solid #dbe3ee;
+    }
+    body.claro p,
+    body.claro .small{
+      color:#374151;
+    }
+    body.claro .sub{
+      color:#475569;
+    }
+    body.claro input{
+      background:#ffffff;
+      color:#111827;
+      border:1px solid #cbd5e1;
+    }
+    body.claro input::placeholder{
+      color:#64748b;
+    }
+    body.claro .item,
+    body.claro .score-row{
+      background:#eaf1f8;
+      color:#111827;
+    }
+    body.claro .theme-toggle{
+      background:#eaf1f8;
+      color:#111827;
+      border:1px solid #cbd5e1;
+    }
+
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Generador Pro</h1>
+<button id="temaBtn" class="theme-toggle" type="button">☀️ Modo claro</button>
     <!-- Updated version indicator to v15. -->
-    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente | v15</div>
+    <div class="sub">Motor de Sucesiones — <b>Loteka</b> solamente | v15 · Claro/Oscuro</div>
 
     <div class="panel">
       <h2>Motor de Sucesiones Loteka</h2>
@@ -903,6 +971,41 @@ document.getElementById("baseResultado").addEventListener("keydown", function(e)
     generarSucesiones();
   }
 });
+
+function actualizarBotonTema(){
+  const btn = document.getElementById("temaBtn");
+  if(!btn) return;
+
+  if(document.body.classList.contains("claro")){
+    btn.textContent = "🌙 Modo oscuro";
+    btn.setAttribute("aria-label", "Cambiar a modo oscuro");
+  }else{
+    btn.textContent = "☀️ Modo claro";
+    btn.setAttribute("aria-label", "Cambiar a modo claro");
+  }
+}
+
+function cambiarTema(){
+  document.body.classList.toggle("claro");
+  localStorage.setItem("temaGeneradorPro", document.body.classList.contains("claro") ? "claro" : "oscuro");
+  actualizarBotonTema();
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  const temaGuardado = localStorage.getItem("temaGeneradorPro");
+
+  if(temaGuardado === "claro"){
+    document.body.classList.add("claro");
+  }
+
+  const btn = document.getElementById("temaBtn");
+  if(btn){
+    btn.addEventListener("click", cambiarTema);
+  }
+
+  actualizarBotonTema();
+});
+
 </script>
 </body>
 </html>
