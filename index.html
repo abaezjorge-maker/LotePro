@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0070)file:///C:/Users/Andy/Downloads/index_lotepro_v23_detector_saltos.html -->
+<!-- saved from url=(0074)file:///C:/Users/Andy/Downloads/index_lotepro_v23_detector_saltos_add.html -->
 <html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,6 +96,9 @@
         <option value="ganaMas">Gana Más</option>
       </select>
 
+      <input id="nuevoSorteo" placeholder="Añadir último sorteo: Ej. 75 77 73" maxlength="12">
+      <button class="btn-secondary" onclick="agregarUltimoSorteo()">➕ Add último sorteo</button>
+
       <textarea id="historial" placeholder="Pega aquí los sorteos, uno por línea:
 75 77 73
 72 06 25
@@ -179,6 +182,44 @@ function parseReal(){
   const nums = raw.match(/\d{1,2}/g) || [];
   return nums.length >= 3 ? nums.slice(0,3).map(fmt) : null;
 }
+
+function parseTresDesdeTexto(raw){
+  raw = (raw || "").trim();
+  const limpio = raw.replace(/\D/g,"");
+  if(limpio.length === 6) return [limpio.slice(0,2), limpio.slice(2,4), limpio.slice(4,6)];
+  const nums = raw.match(/\d{1,2}/g) || [];
+  return nums.length >= 3 ? nums.slice(0,3).map(fmt) : null;
+}
+
+function agregarUltimoSorteo(){
+  const input = document.getElementById("nuevoSorteo");
+  const historial = document.getElementById("historial");
+  const nums = parseTresDesdeTexto(input.value);
+
+  if(!nums){
+    alert("Escribe 3 números. Ejemplo: 75 77 73");
+    return;
+  }
+
+  const linea = nums.join(" ");
+  const actual = historial.value.trim();
+
+  if(actual.startsWith(linea)){
+    alert("Ese sorteo ya está arriba como último sorteo.");
+    return;
+  }
+
+  historial.value = actual ? linea + "\n" + actual : linea;
+  input.value = "";
+  analizarSaltos();
+}
+
+document.getElementById("nuevoSorteo").addEventListener("keydown", e=>{
+  if(e.key === "Enter"){
+    e.preventDefault();
+    agregarUltimoSorteo();
+  }
+});
 
 function saltoCircular(a,b){
   const x = Number(a), y = Number(b);
