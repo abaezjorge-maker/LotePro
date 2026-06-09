@@ -314,6 +314,94 @@
       }
     }
 
+
+    /* Núcleo Activo / Verificador de tickets */
+    .nucleo-activo{
+      margin-top:16px;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(0,245,255,.07);
+      border:1px solid rgba(0,245,255,.18);
+      text-align:center;
+    }
+    .nucleo-activo h4,
+    .nucleo-activo h5{
+      color:#00f5ff;
+      margin-bottom:10px;
+      font-size:17px;
+    }
+    .nucleo-activo input{
+      margin-top:8px;
+      margin-bottom:8px;
+      font-size:15px;
+    }
+    .nucleo-actions{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+      margin:8px 0 10px;
+    }
+    .ticket-box{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:8px;
+      margin-top:10px;
+    }
+    .ticket-line{
+      background:rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:12px;
+      padding:10px;
+      font-weight:bold;
+      letter-spacing:1px;
+      color:#dffcff;
+    }
+    .verify-box{
+      margin-top:10px;
+      text-align:left;
+    }
+    .verify-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      background:rgba(0,0,0,.22);
+      border-radius:12px;
+      padding:9px 10px;
+      margin:7px 0;
+      font-size:13px;
+      color:#dbeafe;
+    }
+    .verify-row strong{color:#86efac;}
+    .premio-total{
+      margin-top:10px;
+      padding:12px;
+      border-radius:14px;
+      background:rgba(34,197,94,.13);
+      border:1px solid rgba(34,197,94,.25);
+      color:#dcfce7;
+      font-weight:bold;
+      text-align:center;
+    }
+    .copy-btn{
+      background:linear-gradient(90deg,#22c55e,#00f5ff);
+    }
+    body.claro .nucleo-activo{
+      background:#eff6ff;
+      border:1px solid #bfdbfe;
+    }
+    body.claro .ticket-line,
+    body.claro .verify-row{
+      background:#eaf1f8;
+      color:#111827;
+      border-color:#cbd5e1;
+    }
+    body.claro .premio-total{
+      background:#dcfce7;
+      color:#14532d;
+      border-color:#86efac;
+    }
+
   </style>
 </head>
 <body>
@@ -380,6 +468,21 @@
       </div>
 
       <div class="small" id="contador">Esperando resultado base...</div>
+
+      <div class="nucleo-activo">
+        <h4>🧬 Núcleo Activo Loteka</h4>
+        <p class="small">Coloca el último sorteo y el sistema genera tickets activos. Luego coloca el sorteo real para verificar premios.</p>
+        <input id="nucleoInput_loteka" placeholder="Último sorteo: Ej: 99 21 94" maxlength="12" />
+        <div class="nucleo-actions">
+          <button onclick="generarNucleoActivo('loteka')">Generar tickets núcleo</button>
+          <button class="copy-btn" onclick="copiarTicketsNucleo('loteka')">Copiar tickets</button>
+        </div>
+        <div id="ticketsNucleo_loteka" class="ticket-box"><div class="ticket-line">--</div></div>
+        <input id="verificaInput_loteka" placeholder="Sorteo real para verificar: Ej: 12 34 56" maxlength="12" />
+        <button onclick="verificarTicketsNucleo('loteka')">Verificar tickets</button>
+        <div id="verificaNucleo_loteka" class="verify-box"><div class="small">Premios: 3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div></div>
+      </div>
+
     </div>
 
     <div class="panel">
@@ -428,6 +531,18 @@
           <h5>Tripletas</h5>
           <div id="randTripletas_laPrimeraDia">--</div>
         </div>
+        <div class="nucleo-activo">
+          <h5>🧬 Núcleo Activo</h5>
+          <input id="nucleoInput_laPrimeraDia" placeholder="Último sorteo: Ej: 12 34 56" maxlength="12" />
+          <div class="nucleo-actions">
+            <button onclick="generarNucleoActivo('laPrimeraDia')">Generar tickets núcleo</button>
+            <button class="copy-btn" onclick="copiarTicketsNucleo('laPrimeraDia')">Copiar tickets</button>
+          </div>
+          <div id="ticketsNucleo_laPrimeraDia" class="ticket-box"><div class="ticket-line">--</div></div>
+          <input id="verificaInput_laPrimeraDia" placeholder="Sorteo real para verificar" maxlength="12" />
+          <button onclick="verificarTicketsNucleo('laPrimeraDia')">Verificar tickets</button>
+          <div id="verificaNucleo_laPrimeraDia" class="verify-box"><div class="small">3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div></div>
+        </div>
       </div>
     </details>
     <details>
@@ -443,6 +558,18 @@
           <div id="randPales_laPrimeraNoche">--</div>
           <h5>Tripletas</h5>
           <div id="randTripletas_laPrimeraNoche">--</div>
+        </div>
+        <div class="nucleo-activo">
+          <h5>🧬 Núcleo Activo</h5>
+          <input id="nucleoInput_laPrimeraNoche" placeholder="Último sorteo: Ej: 12 34 56" maxlength="12" />
+          <div class="nucleo-actions">
+            <button onclick="generarNucleoActivo('laPrimeraNoche')">Generar tickets núcleo</button>
+            <button class="copy-btn" onclick="copiarTicketsNucleo('laPrimeraNoche')">Copiar tickets</button>
+          </div>
+          <div id="ticketsNucleo_laPrimeraNoche" class="ticket-box"><div class="ticket-line">--</div></div>
+          <input id="verificaInput_laPrimeraNoche" placeholder="Sorteo real para verificar" maxlength="12" />
+          <button onclick="verificarTicketsNucleo('laPrimeraNoche')">Verificar tickets</button>
+          <div id="verificaNucleo_laPrimeraNoche" class="verify-box"><div class="small">3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div></div>
         </div>
       </div>
     </details>
@@ -460,6 +587,18 @@
           <h5>Tripletas</h5>
           <div id="randTripletas_nacional">--</div>
         </div>
+        <div class="nucleo-activo">
+          <h5>🧬 Núcleo Activo</h5>
+          <input id="nucleoInput_nacional" placeholder="Último sorteo: Ej: 12 34 56" maxlength="12" />
+          <div class="nucleo-actions">
+            <button onclick="generarNucleoActivo('nacional')">Generar tickets núcleo</button>
+            <button class="copy-btn" onclick="copiarTicketsNucleo('nacional')">Copiar tickets</button>
+          </div>
+          <div id="ticketsNucleo_nacional" class="ticket-box"><div class="ticket-line">--</div></div>
+          <input id="verificaInput_nacional" placeholder="Sorteo real para verificar" maxlength="12" />
+          <button onclick="verificarTicketsNucleo('nacional')">Verificar tickets</button>
+          <div id="verificaNucleo_nacional" class="verify-box"><div class="small">3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div></div>
+        </div>
       </div>
     </details>
     <details>
@@ -475,6 +614,18 @@
           <div id="randPales_real">--</div>
           <h5>Tripletas</h5>
           <div id="randTripletas_real">--</div>
+        </div>
+        <div class="nucleo-activo">
+          <h5>🧬 Núcleo Activo</h5>
+          <input id="nucleoInput_real" placeholder="Último sorteo: Ej: 12 34 56" maxlength="12" />
+          <div class="nucleo-actions">
+            <button onclick="generarNucleoActivo('real')">Generar tickets núcleo</button>
+            <button class="copy-btn" onclick="copiarTicketsNucleo('real')">Copiar tickets</button>
+          </div>
+          <div id="ticketsNucleo_real" class="ticket-box"><div class="ticket-line">--</div></div>
+          <input id="verificaInput_real" placeholder="Sorteo real para verificar" maxlength="12" />
+          <button onclick="verificarTicketsNucleo('real')">Verificar tickets</button>
+          <div id="verificaNucleo_real" class="verify-box"><div class="small">3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div></div>
         </div>
       </div>
     </details>
@@ -492,6 +643,18 @@
           <h5>Tripletas</h5>
           <div id="randTripletas_ganaMas">--</div>
         </div>
+        <div class="nucleo-activo">
+          <h5>🧬 Núcleo Activo</h5>
+          <input id="nucleoInput_ganaMas" placeholder="Último sorteo: Ej: 12 34 56" maxlength="12" />
+          <div class="nucleo-actions">
+            <button onclick="generarNucleoActivo('ganaMas')">Generar tickets núcleo</button>
+            <button class="copy-btn" onclick="copiarTicketsNucleo('ganaMas')">Copiar tickets</button>
+          </div>
+          <div id="ticketsNucleo_ganaMas" class="ticket-box"><div class="ticket-line">--</div></div>
+          <input id="verificaInput_ganaMas" placeholder="Sorteo real para verificar" maxlength="12" />
+          <button onclick="verificarTicketsNucleo('ganaMas')">Verificar tickets</button>
+          <div id="verificaNucleo_ganaMas" class="verify-box"><div class="small">3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div></div>
+        </div>
       </div>
     </details>
     <details>
@@ -508,6 +671,18 @@
           <h5>Tripletas</h5>
           <div id="randTripletas_laSuerte1230">--</div>
         </div>
+        <div class="nucleo-activo">
+          <h5>🧬 Núcleo Activo</h5>
+          <input id="nucleoInput_laSuerte1230" placeholder="Último sorteo: Ej: 12 34 56" maxlength="12" />
+          <div class="nucleo-actions">
+            <button onclick="generarNucleoActivo('laSuerte1230')">Generar tickets núcleo</button>
+            <button class="copy-btn" onclick="copiarTicketsNucleo('laSuerte1230')">Copiar tickets</button>
+          </div>
+          <div id="ticketsNucleo_laSuerte1230" class="ticket-box"><div class="ticket-line">--</div></div>
+          <input id="verificaInput_laSuerte1230" placeholder="Sorteo real para verificar" maxlength="12" />
+          <button onclick="verificarTicketsNucleo('laSuerte1230')">Verificar tickets</button>
+          <div id="verificaNucleo_laSuerte1230" class="verify-box"><div class="small">3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div></div>
+        </div>
       </div>
     </details>
     <details>
@@ -523,6 +698,18 @@
           <div id="randPales_laSuerte1800">--</div>
           <h5>Tripletas</h5>
           <div id="randTripletas_laSuerte1800">--</div>
+        </div>
+        <div class="nucleo-activo">
+          <h5>🧬 Núcleo Activo</h5>
+          <input id="nucleoInput_laSuerte1800" placeholder="Último sorteo: Ej: 12 34 56" maxlength="12" />
+          <div class="nucleo-actions">
+            <button onclick="generarNucleoActivo('laSuerte1800')">Generar tickets núcleo</button>
+            <button class="copy-btn" onclick="copiarTicketsNucleo('laSuerte1800')">Copiar tickets</button>
+          </div>
+          <div id="ticketsNucleo_laSuerte1800" class="ticket-box"><div class="ticket-line">--</div></div>
+          <input id="verificaInput_laSuerte1800" placeholder="Sorteo real para verificar" maxlength="12" />
+          <button onclick="verificarTicketsNucleo('laSuerte1800')">Verificar tickets</button>
+          <div id="verificaNucleo_laSuerte1800" class="verify-box"><div class="small">3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div></div>
         </div>
       </div>
     </details>
@@ -1447,6 +1634,118 @@ function generarRandom(key){
   if(triCont) triCont.innerHTML = tripletas.map(t => `<div class="item">${t[0]} - ${t[1]} - ${t[2]}</div>`).join('') || '--';
 }
 
+
+
+// ---------------------------------------------
+// Núcleo Activo para todos los motores
+// Regla de premios: 3 aciertos = RD$30,000 | 2 aciertos = RD$1,000
+const TICKETS_NUCLEO = {};
+const PREMIOS_NUCLEO = {3:30000, 2:1000};
+
+function parseTresNumerosDesdeInput(id){
+  const el = document.getElementById(id);
+  const raw = el ? el.value.trim() : "";
+  const limpio = raw.replace(/\D/g, "");
+  if(limpio.length === 6) return [limpio.slice(0,2), limpio.slice(2,4), limpio.slice(4,6)];
+  const nums = raw.match(/\d{1,2}/g) || [];
+  const out = nums.slice(0,3).map(x => x.padStart(2,"0").slice(-2));
+  return out.length === 3 ? out : null;
+}
+
+function derivadosNucleoActivo(base, key){
+  const pool = [];
+  base.forEach((n, idx)=>{
+    const x = parseInt(n,10);
+    pool.push(n);
+    pool.push(inverso(n));
+    pool.push(fmt(x + 1));
+    pool.push(fmt(x - 1));
+    pool.push(fmt(x + 10));
+    pool.push(fmt(x - 10));
+    pool.push(fmt(x + (idx+1)*7));
+  });
+
+  // Refuerzo especial para Loteka usando su núcleo histórico si existe.
+  if(key === 'loteka' && typeof NUCLEO_LOTEKA !== 'undefined'){
+    pool.push(...NUCLEO_LOTEKA);
+  }
+
+  // Semilla diferente por motor para que cada uno tenga vida propia.
+  const motorShift = key.split('').reduce((acc,ch)=>acc + ch.charCodeAt(0),0) % 100;
+  base.forEach(n=>{
+    const x = parseInt(n,10);
+    pool.push(fmt(x + motorShift));
+    pool.push(fmt(x - motorShift));
+  });
+
+  return unicos(pool).filter(n => !base.includes(n)).slice(0,10);
+}
+
+function crearTicketsDesdeNucleo(nucleo){
+  const n = nucleo.slice(0,10);
+  while(n.length < 10){
+    const r = fmt(Math.floor(Math.random()*100));
+    if(!n.includes(r)) n.push(r);
+  }
+  return [
+    [n[0], n[1], n[2]],
+    [n[3], n[4], n[5]],
+    [n[6], n[7], n[8]],
+    [n[0], n[4], n[9]],
+    [n[1], n[5], n[8]]
+  ];
+}
+
+function generarNucleoActivo(key){
+  const base = parseTresNumerosDesdeInput('nucleoInput_' + key);
+  if(!base){ alert('Coloca 3 números del último sorteo. Ej: 12 34 56'); return; }
+
+  const nucleo = derivadosNucleoActivo(base, key);
+  const tickets = crearTicketsDesdeNucleo(nucleo);
+  TICKETS_NUCLEO[key] = tickets;
+
+  const cont = document.getElementById('ticketsNucleo_' + key);
+  if(cont){
+    cont.innerHTML = tickets.map((t,i)=>`<div class="ticket-line">Ticket ${i+1}: ${t.join(' - ')}</div>`).join('');
+  }
+
+  const ver = document.getElementById('verificaNucleo_' + key);
+  if(ver){
+    ver.innerHTML = `<div class="small">Núcleo generado desde: ${base.join(' - ')} | Premios: 3 aciertos = RD$30,000 | 2 aciertos = RD$1,000</div>`;
+  }
+}
+
+function verificarTicketsNucleo(key){
+  const real = parseTresNumerosDesdeInput('verificaInput_' + key);
+  if(!real){ alert('Coloca el sorteo real con 3 números. Ej: 12 34 56'); return; }
+
+  const tickets = TICKETS_NUCLEO[key] || [];
+  if(!tickets.length){ alert('Primero genera los tickets del Núcleo Activo.'); return; }
+
+  let total = 0;
+  const rows = tickets.map((ticket, i)=>{
+    const aciertos = ticket.filter(n => real.includes(n));
+    const premio = PREMIOS_NUCLEO[aciertos.length] || 0;
+    total += premio;
+    return `<div class="verify-row"><span>Ticket ${i+1}: ${ticket.join(' - ')}<br><small>Aciertos: ${aciertos.length}${aciertos.length ? ' → ' + aciertos.join(', ') : ''}</small></span><strong>RD$${premio.toLocaleString('es-DO')}</strong></div>`;
+  }).join('');
+
+  const cont = document.getElementById('verificaNucleo_' + key);
+  if(cont){
+    cont.innerHTML = `
+      <div class="small">Sorteo real: ${real.join(' - ')}</div>
+      ${rows}
+      <div class="premio-total">Total ganado: RD$${total.toLocaleString('es-DO')}</div>
+    `;
+  }
+}
+
+function copiarTicketsNucleo(key){
+  const tickets = TICKETS_NUCLEO[key] || [];
+  if(!tickets.length){ alert('Primero genera los tickets del Núcleo Activo.'); return; }
+  const texto = tickets.map((t,i)=>`Ticket ${i+1}: ${t.join(' - ')}`).join('\n');
+  navigator.clipboard.writeText(texto).then(()=>alert('Tickets copiados ✅'));
+}
 
 
 </script>
