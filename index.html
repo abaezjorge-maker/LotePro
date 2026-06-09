@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- saved from url=(0061)file:///C:/Users/Andy/Downloads/LotePro_Tiempos_Loterias.html -->
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LotePro | Matrix Cube + Tómbolas</title>
   <style>
     :root{
@@ -430,6 +430,154 @@
     body.light-mode .last span{
       color:var(--accent);
     }
+
+    /* MODO COMPACTO PARA EVITAR SCROLL */
+    body{
+      padding:8px;
+      align-items:flex-start;
+    }
+    .container{
+      max-width:690px;
+      padding:18px 14px;
+      border-radius:22px;
+    }
+    h1{
+      font-size:34px;
+      margin-bottom:4px;
+    }
+    .sub{
+      font-size:12px;
+      margin-bottom:10px;
+    }
+    .container > div[style*="margin:15px"]{
+      margin:8px 0 12px !important;
+      padding:10px !important;
+      border-radius:14px !important;
+    }
+    .container > div[style*="margin:15px"] h3{
+      margin-bottom:5px !important;
+      font-size:15px !important;
+    }
+    .container > div[style*="margin:15px"] div{
+      padding:3px !important;
+      font-size:12px !important;
+    }
+    .matrix-loader{
+      margin:8px auto 14px;
+      padding:12px 8px;
+      border-radius:18px;
+    }
+    .cube-scene{
+      width:95px;
+      height:95px;
+    }
+    .rubik-cube{
+      width:68px;
+      height:68px;
+      margin:13px auto;
+    }
+    .cube-face{
+      width:68px;
+      height:68px;
+      gap:3px;
+      padding:4px;
+    }
+    .cube-face.front{transform:rotateY(0deg) translateZ(34px)}
+    .cube-face.back{transform:rotateY(180deg) translateZ(34px)}
+    .cube-face.right{transform:rotateY(90deg) translateZ(34px)}
+    .cube-face.left{transform:rotateY(-90deg) translateZ(34px)}
+    .cube-face.top{transform:rotateX(90deg) translateZ(34px)}
+    .cube-face.bottom{transform:rotateX(-90deg) translateZ(34px)}
+    .matrix-text{
+      font-size:12px;
+      margin-top:6px;
+    }
+    .matrix-steps{
+      margin-top:6px;
+      gap:5px;
+    }
+    .matrix-steps span{
+      font-size:10px;
+      padding:4px 7px;
+    }
+    .tombola-section{
+      padding:14px;
+      border-radius:20px;
+    }
+    .tombola-section h2{
+      font-size:20px;
+      margin-bottom:4px;
+    }
+    p{
+      font-size:12px;
+      margin:5px 0 9px;
+    }
+    .box{
+      padding:9px 10px;
+      margin-top:8px;
+      border-radius:14px;
+      max-height:95px;
+    }
+    .box-title{
+      font-size:12px;
+      margin-bottom:5px;
+    }
+    #loteriaSelect{
+      padding:8px !important;
+      font-size:12px !important;
+    }
+    .tombola-row{
+      gap:16px;
+      margin:12px 0 8px;
+    }
+    .tombola{
+      width:105px;
+      gap:5px;
+    }
+    .tombola-label{
+      font-size:11px;
+    }
+    .tombola-globe{
+      width:82px;
+      height:82px;
+    }
+    .tombola-num{
+      font-size:27px;
+    }
+    .tombola-num.rolling{
+      font-size:23px;
+    }
+    .tombola-chip{
+      font-size:11px;
+      padding:4px 11px;
+      min-width:45px;
+    }
+    .last{
+      margin:10px 0 6px;
+      padding:9px 12px;
+      font-size:13px;
+      border-radius:13px;
+    }
+    .controls{
+      gap:8px;
+      margin-top:8px;
+    }
+    .controls button{
+      min-width:120px;
+      padding:10px;
+      font-size:13px;
+      border-radius:13px;
+      margin-top:4px;
+    }
+    .line{
+      font-size:12px;
+      padding:3px 0;
+    }
+    .freq-chip{
+      font-size:11px;
+      padding:3px 8px;
+    }
+
     @media(max-width:520px){
       h1{font-size:34px}
       .container{padding:26px 16px}
@@ -702,5 +850,5 @@ function limpiarHistorial(){
   renderFrecuencia();
 }
 </script>
-
-</body></html>
+</body>
+</html>
