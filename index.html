@@ -1,182 +1,44 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LotePro v21 | Núcleo Activo Matrix Cube</title>
+<!-- saved from url=(0070)file:///C:/Users/Andy/Downloads/index_lotepro_v23_detector_saltos.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LotePro v23 | Detector de Saltos Matrix Cube</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-    body{
-      min-height:100vh;
-      background:radial-gradient(circle at top,#14213d,#050505 65%);
-      color:white;
-      padding:20px;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
-    }
-    .container{
-      width:100%;
-      max-width:780px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:28px;
-      padding:32px 22px;
-      text-align:center;
-      box-shadow:0 0 40px rgba(0,245,255,.18);
-      backdrop-filter:blur(12px);
-    }
-    h1{
-      font-size:40px;
-      margin-bottom:8px;
-      background:linear-gradient(90deg,#00f5ff,#fff,#ff00ff);
-      -webkit-background-clip:text;
-      color:transparent;
-    }
+    body{min-height:100vh;background:radial-gradient(circle at top,#14213d,#050505 65%);color:white;padding:20px;display:flex;justify-content:center;align-items:flex-start}
+    .container{width:100%;max-width:820px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:28px;padding:32px 22px;text-align:center;box-shadow:0 0 40px rgba(0,245,255,.18);backdrop-filter:blur(12px)}
+    h1{font-size:40px;margin-bottom:8px;background:linear-gradient(90deg,#00f5ff,#fff,#ff00ff);-webkit-background-clip:text;color:transparent}
     .sub{color:#cbd5e1;font-size:14px;line-height:1.6;margin-bottom:18px}
-    .panel{
-      margin-top:18px;
-      padding:18px;
-      border-radius:20px;
-      background:rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.12);
-    }
+    .panel{margin-top:18px;padding:18px;border-radius:20px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.12)}
     h2{font-size:22px;margin-bottom:12px;color:#00f5ff}
     h3{color:#00f5ff;margin:12px 0 10px;font-size:18px}
     p{color:#ddd;font-size:14px;line-height:1.6;margin:8px 0 16px}
-    input,select,textarea{
-      width:100%;
-      padding:14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.2);
-      background:rgba(255,255,255,.12);
-      color:white;
-      font-size:17px;
-      outline:none;
-      text-align:center;
-      margin-bottom:12px;
-      font-weight:bold;
-      letter-spacing:1px;
-    }
-    textarea{
-      min-height:86px;
-      resize:vertical;
-      text-align:left;
-      line-height:1.5;
-    }
+    input,select,textarea{width:100%;padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.12);color:white;font-size:16px;outline:none;text-align:center;margin-bottom:12px;font-weight:bold;letter-spacing:.5px}
+    textarea{min-height:160px;resize:vertical;text-align:left;line-height:1.55;font-family:Consolas,monospace;font-size:14px}
     input::placeholder,textarea::placeholder{color:rgba(255,255,255,.55);font-weight:normal}
     select option{background:#111827;color:#fff}
-    button{
-      width:100%;
-      padding:15px;
-      border:none;
-      border-radius:18px;
-      background:linear-gradient(90deg,#00f5ff,#ff00ff);
-      color:white;
-      font-size:16px;
-      font-weight:bold;
-      cursor:pointer;
-      transition:.25s;
-      margin-top:4px;
-    }
+    button{width:100%;padding:15px;border:none;border-radius:18px;background:linear-gradient(90deg,#00f5ff,#ff00ff);color:white;font-size:16px;font-weight:bold;cursor:pointer;transition:.25s;margin-top:4px}
     button:hover{transform:scale(1.02);box-shadow:0 0 25px rgba(0,245,255,.5)}
     .btn-secondary{background:linear-gradient(90deg,#22c55e,#00f5ff)}
     .btn-copy{background:linear-gradient(90deg,#f59e0b,#ff00ff);margin-top:10px}
-    .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
-    .cards-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px}
-    .card{
-      background:rgba(255,255,255,.09);
-      border:1px solid rgba(255,255,255,.15);
-      border-radius:18px;
-      padding:15px;
-    }
-    .item{
-      background:rgba(0,0,0,.25);
-      border-radius:12px;
-      padding:10px;
-      font-weight:bold;
-      font-size:19px;
-      letter-spacing:1px;
-      margin:7px 0;
-    }
-    .ticket{
-      background:rgba(0,0,0,.25);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:16px;
-      padding:12px;
-      margin:10px 0;
-      text-align:left;
-      color:#e0f2fe;
-      font-size:14px;
-      line-height:1.5;
-    }
-    .ticket strong{color:#fff}
+    .cards-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:14px}
+    .card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:15px}
+    .item{background:rgba(0,0,0,.25);border-radius:12px;padding:10px;font-weight:bold;font-size:19px;letter-spacing:1px;margin:7px 0}
+    .package{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px;margin:10px 0;text-align:left;color:#e0f2fe;font-size:14px;line-height:1.55}
+    .package strong{color:#fff}
     .win{border-color:rgba(34,197,94,.55);box-shadow:0 0 16px rgba(34,197,94,.16)}
     .small{font-size:12px;color:#aaa;margin-top:10px;line-height:1.5}
-    .result-box{
-      margin-top:14px;
-      background:rgba(0,0,0,.26);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:18px;
-      padding:14px;
-      text-align:left;
-      color:#ddd;
-      font-size:14px;
-      line-height:1.6;
-    }
+    .result-box{margin-top:14px;background:rgba(0,0,0,.26);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:14px;text-align:left;color:#ddd;font-size:14px;line-height:1.6}
     .tag{color:#00f5ff;font-weight:bold}
-    .total{
-      margin-top:12px;
-      padding:12px;
-      border-radius:14px;
-      background:rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.35);
-      color:#dcfce7;
-      font-weight:bold;
-      text-align:center;
-    }
-
-    .matrix-loader{
-      margin:16px auto;
-      padding:18px 12px;
-      border-radius:20px;
-      background:rgba(0,0,0,.22);
-      border:1px solid rgba(0,245,255,.18);
-      box-shadow:0 0 25px rgba(0,245,255,.12) inset;
-      overflow:hidden;
-      position:relative;
-    }
-    .matrix-loader::before{
-      content:"0101 97 74 68 64 70 1010 78 42 65 14 12 100000 SIMULACIONES NUCLEO ACTIVO";
-      position:absolute;
-      inset:0;
-      color:rgba(0,255,136,.10);
-      font-size:12px;
-      letter-spacing:4px;
-      line-height:22px;
-      word-break:break-all;
-      animation:matrixRain 3s linear infinite;
-      pointer-events:none;
-    }
+    .total{margin-top:12px;padding:12px;border-radius:14px;background:rgba(34,197,94,.14);border:1px solid rgba(34,197,94,.35);color:#dcfce7;font-weight:bold;text-align:center}
+    .mini{display:inline-block;padding:5px 8px;border-radius:999px;background:rgba(0,245,255,.12);border:1px solid rgba(0,245,255,.18);color:#7dd3fc;margin:3px;font-size:12px;font-weight:bold}
+    .matrix-loader{margin:16px auto;padding:18px 12px;border-radius:20px;background:rgba(0,0,0,.22);border:1px solid rgba(0,245,255,.18);box-shadow:0 0 25px rgba(0,245,255,.12) inset;overflow:hidden;position:relative}
+    .matrix-loader::before{content:"SALTOS +8 -17 +22 REBOTE SUPERVIVENCIA MATRIZ NUCLEO ACTIVO LOTEPRO V23";position:absolute;inset:0;color:rgba(0,255,136,.10);font-size:12px;letter-spacing:4px;line-height:22px;word-break:break-all;animation:matrixRain 3s linear infinite;pointer-events:none}
     .cube-scene{width:120px;height:120px;margin:0 auto;perspective:800px;position:relative;z-index:2}
-    .rubik-cube{
-      width:86px;height:86px;position:relative;margin:17px auto;
-      transform-style:preserve-3d;
-      animation:cubeSpin 1.8s linear infinite;
-    }
-    .cube-face{
-      position:absolute;width:86px;height:86px;
-      display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);
-      gap:4px;padding:5px;background:rgba(2,6,23,.88);
-      border:1px solid rgba(0,245,255,.55);
-      box-shadow:0 0 18px rgba(0,245,255,.35);
-    }
-    .cube-face span{
-      display:block;border-radius:5px;
-      background:linear-gradient(135deg,#00ff88,#00f5ff);
-      box-shadow:0 0 10px rgba(0,255,136,.55);
-      animation:tilePulse 900ms ease-in-out infinite alternate;
-    }
+    .rubik-cube{width:86px;height:86px;position:relative;margin:17px auto;transform-style:preserve-3d;animation:cubeSpin 1.8s linear infinite}
+    .cube-face{position:absolute;width:86px;height:86px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:4px;padding:5px;background:rgba(2,6,23,.88);border:1px solid rgba(0,245,255,.55);box-shadow:0 0 18px rgba(0,245,255,.35)}
+    .cube-face span{display:block;border-radius:5px;background:linear-gradient(135deg,#00ff88,#00f5ff);box-shadow:0 0 10px rgba(0,255,136,.55);animation:tilePulse 900ms ease-in-out infinite alternate}
     .cube-face span:nth-child(2n){background:linear-gradient(135deg,#ff00ff,#00f5ff);animation-delay:.15s}
     .cube-face span:nth-child(3n){background:linear-gradient(135deg,#facc15,#00ff88);animation-delay:.30s}
     .cube-face.front{transform:rotateY(0deg) translateZ(43px)}
@@ -185,46 +47,20 @@
     .cube-face.left{transform:rotateY(-90deg) translateZ(43px)}
     .cube-face.top{transform:rotateX(90deg) translateZ(43px)}
     .cube-face.bottom{transform:rotateX(-90deg) translateZ(43px)}
-    .matrix-text{
-      position:relative;z-index:2;color:#00f5ff;font-weight:bold;
-      font-size:13px;letter-spacing:.5px;margin-top:10px;
-      animation:loaderBlink 1s ease-in-out infinite;
-    }
-    .matrix-steps{
-      position:relative;z-index:2;display:flex;flex-wrap:wrap;
-      justify-content:center;gap:7px;margin-top:10px;
-    }
-    .matrix-steps span{
-      font-size:11px;padding:5px 8px;border-radius:999px;
-      background:rgba(0,245,255,.10);
-      border:1px solid rgba(0,245,255,.22);
-      color:#dffcff;
-    }
-
-    @keyframes cubeSpin{
-      0%{transform:rotateX(-22deg) rotateY(0deg) rotateZ(0deg)}
-      35%{transform:rotateX(35deg) rotateY(160deg) rotateZ(8deg)}
-      70%{transform:rotateX(-18deg) rotateY(300deg) rotateZ(-8deg)}
-      100%{transform:rotateX(-22deg) rotateY(360deg) rotateZ(0deg)}
-    }
-    @keyframes tilePulse{
-      from{opacity:.45;transform:scale(.88);filter:saturate(.8)}
-      to{opacity:1;transform:scale(1);filter:saturate(1.5)}
-    }
+    .matrix-text{position:relative;z-index:2;color:#00f5ff;font-weight:bold;font-size:13px;letter-spacing:.5px;margin-top:10px;animation:loaderBlink 1s ease-in-out infinite}
+    .matrix-steps{position:relative;z-index:2;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:10px}
+    .matrix-steps span{font-size:11px;padding:5px 8px;border-radius:999px;background:rgba(0,245,255,.10);border:1px solid rgba(0,245,255,.22);color:#dffcff}
+    @keyframes cubeSpin{0%{transform:rotateX(-22deg) rotateY(0deg) rotateZ(0deg)}35%{transform:rotateX(35deg) rotateY(160deg) rotateZ(8deg)}70%{transform:rotateX(-18deg) rotateY(300deg) rotateZ(-8deg)}100%{transform:rotateX(-22deg) rotateY(360deg) rotateZ(0deg)}}
+    @keyframes tilePulse{from{opacity:.45;transform:scale(.88);filter:saturate(.8)}to{opacity:1;transform:scale(1);filter:saturate(1.5)}}
     @keyframes loaderBlink{0%,100%{opacity:.45}50%{opacity:1}}
     @keyframes matrixRain{from{transform:translateY(-30%)}to{transform:translateY(30%)}}
-
-    @media(max-width:520px){
-      h1{font-size:32px}
-      .container{padding:26px 16px}
-      .item{font-size:17px}
-    }
+    @media(max-width:520px){h1{font-size:32px}.container{padding:26px 16px}.item{font-size:17px}}
   </style>
 </head>
 <body>
   <div class="container">
     <h1>LotePro</h1>
-    <div class="sub">🔥 Núcleo Activo Matrix Cube | v21 | 100,000 simulaciones</div>
+    <div class="sub">🧬 Detector de Saltos Matrix Cube | v23 | 3 paquetes de 4 números</div>
 
     <div class="matrix-loader" aria-live="polite">
       <div class="cube-scene">
@@ -237,319 +73,319 @@
           <div class="cube-face bottom"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
         </div>
       </div>
-      <div class="matrix-text">Matrix Cube en movimiento · Núcleo vivo activo</div>
+      <div class="matrix-text">Matrix Cube detectando saltos vivos</div>
       <div class="matrix-steps">
-        <span>Último sorteo</span>
-        <span>Núcleo</span>
-        <span>100,000 simulaciones</span>
-        <span>Tickets</span>
-        <span>Verificador</span>
+        <span>Últimos sorteos</span>
+        <span>Saltos</span>
+        <span>Rebotes</span>
+        <span>Supervivencia</span>
+        <span>Paquetes</span>
       </div>
     </div>
 
     <div class="panel">
-      <h2>🎯 Núcleo Activo</h2>
-      <p>Selecciona el motor, coloca el último sorteo y genera tickets usando 100,000 simulaciones internas.</p>
+      <h2>🔥 Motor Detector de Saltos</h2>
+      <p>Pega los últimos sorteos de una lotería. Cada línea debe tener 3 números. El sistema detecta los saltos entre sorteos y genera 3 paquetes de 4 números.</p>
 
       <select id="motor">
         <option value="loteka">Loteka</option>
         <option value="laPrimeraDia">La Primera Día</option>
         <option value="laPrimeraNoche">La Primera Noche</option>
-        <option value="nacional">Nacional</option>
+        <option value="nacionalNoche">Nacional Noche</option>
         <option value="real">Real</option>
         <option value="ganaMas">Gana Más</option>
-        <option value="laSuerte1230">La Suerte 12:30</option>
-        <option value="laSuerte1800">La Suerte 6:00 PM</option>
       </select>
 
-      <input id="ultimoSorteo" placeholder="Último sorteo: Ej. 99 21 94" maxlength="12" />
-      <button onclick="generarNucleoActivo()">Generar Núcleo Activo</button>
+      <textarea id="historial" placeholder="Pega aquí los sorteos, uno por línea:
+75 77 73
+72 06 25
+38 94 87
+29 48 17"></textarea>
+
+      <button onclick="analizarSaltos()">Analizar Saltos y Generar Paquetes</button>
 
       <div class="cards-3">
         <div class="card">
-          <h3>🔥 Quinielas</h3>
-          <div id="quinielas"><div class="item">--</div></div>
+          <h3>📦 Paquete A</h3>
+          <div id="paqueteA"><div class="item">--</div></div>
         </div>
         <div class="card">
-          <h3>🎯 Palés</h3>
-          <div id="pales"><div class="item">--</div></div>
+          <h3>📦 Paquete B</h3>
+          <div id="paqueteB"><div class="item">--</div></div>
         </div>
         <div class="card">
-          <h3>⚡ Tripletas</h3>
-          <div id="tripletas"><div class="item">--</div></div>
+          <h3>📦 Paquete C</h3>
+          <div id="paqueteC"><div class="item">--</div></div>
         </div>
       </div>
 
       <div class="result-box">
-        <span class="tag">Tickets generados:</span>
-        <div id="tickets"><div class="ticket">Esperando núcleo activo...</div></div>
-        <button class="btn-copy" onclick="copiarTickets()">Copiar tickets</button>
+        <span class="tag">Lectura de saltos:</span>
+        <div id="lectura">Esperando análisis...</div>
+        <button class="btn-copy" onclick="copiarPaquetes()">Copiar paquetes</button>
       </div>
-
-      <div class="small" id="estado">Esperando último sorteo...</div>
     </div>
 
     <div class="panel">
-      <h2>✅ Verificar Tickets</h2>
-      <p>Pega el sorteo real para verificar los tickets generados. Premios: 3 aciertos = RD$30,000 · 2 aciertos = RD$1,000.</p>
-      <input id="sorteoReal" placeholder="Sorteo real: Ej. 68 74 97" maxlength="12" />
-      <button class="btn-secondary" onclick="verificarTickets()">Verificar tickets</button>
+      <h2>✅ Verificar Paquetes</h2>
+      <p>Pega el sorteo real. El sistema cuenta aciertos dentro de cada paquete de 4 números.</p>
+      <input id="sorteoReal" placeholder="Sorteo real: Ej. 68 74 97" maxlength="12">
+      <button class="btn-secondary" onclick="verificarPaquetes()">Verificar paquetes</button>
       <div id="verificacion" class="result-box">Esperando verificación...</div>
     </div>
   </div>
 
 <script>
-const CONFIG_MOTORES = {
-  loteka: { nombre:"Loteka", semilla:["97","74","68","64","70","78","42","65","14","12"] },
-  laPrimeraDia: { nombre:"La Primera Día", semilla:["25","40","95","68","74","12","21","56","37","64"] },
-  laPrimeraNoche: { nombre:"La Primera Noche", semilla:["83","68","07","74","97","21","65","42","14","70"] },
-  nacional: { nombre:"Nacional", semilla:["71","81","09","24","18","91","37","68","70","78"] },
-  real: { nombre:"Real", semilla:["27","50","64","68","74","97","12","42","65","78"] },
-  ganaMas: { nombre:"Gana Más", semilla:["30","11","64","68","70","74","97","42","21","12"] },
-  laSuerte1230: { nombre:"La Suerte 12:30", semilla:["21","75","59","68","06","94","14","41","97","64"] },
-  laSuerte1800: { nombre:"La Suerte 6:00 PM", semilla:["68","74","97","64","70","78","42","65","14","12"] }
+const SEMILLAS = {
+  loteka:["97","74","68","64","70","78","42","65","14","12"],
+  laPrimeraDia:["68","72","75","77","73","94","87","48","17","52"],
+  laPrimeraNoche:["90","64","95","87","72","79","85","09","39","42"],
+  nacionalNoche:["72","49","26","05","37","84","97","57","53","83"],
+  real:["99","77","71","68","81","34","52","26","95","66"],
+  ganaMas:["31","41","70","83","88","82","51","78","13","34"]
 };
 
-let ticketsActuales = [];
+const NOMBRES = {
+  loteka:"Loteka",
+  laPrimeraDia:"La Primera Día",
+  laPrimeraNoche:"La Primera Noche",
+  nacionalNoche:"Nacional Noche",
+  real:"Real",
+  ganaMas:"Gana Más"
+};
+
+let paquetesActuales = [];
 let resumenActual = "";
 
-function fmt(n){
-  return (((Number(n) % 100) + 100) % 100).toString().padStart(2,"0");
+function fmt(n){return (((Number(n)%100)+100)%100).toString().padStart(2,"0")}
+function inv(n){return fmt(n).split("").reverse().join("")}
+function unicos(arr){return [...new Set(arr.map(fmt))]}
+
+function parseHistorial(){
+  const raw = document.getElementById("historial").value.trim();
+  const lineas = raw.split(/\n+/).map(l=>l.trim()).filter(Boolean);
+  const sorteos = [];
+  for(const linea of lineas){
+    const nums = linea.match(/\d{1,2}/g) || [];
+    if(nums.length >= 3) sorteos.push(nums.slice(0,3).map(fmt));
+  }
+  return sorteos;
 }
 
-function inverso(n){
-  n = fmt(n);
-  return n.split("").reverse().join("");
-}
-
-function parseTresNumeros(id){
-  const raw = document.getElementById(id).value.trim();
+function parseReal(){
+  const raw = document.getElementById("sorteoReal").value.trim();
   const limpio = raw.replace(/\D/g,"");
-  if(limpio.length === 6){
-    return [limpio.slice(0,2), limpio.slice(2,4), limpio.slice(4,6)];
-  }
+  if(limpio.length === 6) return [limpio.slice(0,2), limpio.slice(2,4), limpio.slice(4,6)];
   const nums = raw.match(/\d{1,2}/g) || [];
-  const out = nums.slice(0,3).map(x=>fmt(x));
-  return out.length === 3 ? out : null;
+  return nums.length >= 3 ? nums.slice(0,3).map(fmt) : null;
 }
 
-function unicos(arr){
-  return [...new Set(arr.map(fmt))];
+function saltoCircular(a,b){
+  const x = Number(a), y = Number(b);
+  const adelante = (y - x + 100) % 100;
+  const atras = (x - y + 100) % 100;
+  return adelante <= atras ? adelante : -atras;
 }
 
-function derivadosBase(base){
-  const out = [];
-  base.forEach(n=>{
-    const x = parseInt(n,10);
-    out.push(
-      fmt(x+1), fmt(x-1), fmt(x+10), fmt(x-10),
-      inverso(n), fmt(x+11), fmt(x-11), fmt(99-x)
-    );
-  });
-  return unicos(out);
+function aplicarSalto(n,s){
+  return fmt(Number(n)+Number(s));
 }
 
-function escogerPonderado(pool, scores){
-  const total = pool.reduce((s,n)=>s+(scores[n]||1),0);
-  let r = Math.random() * total;
-  for(const n of pool){
-    r -= (scores[n]||1);
-    if(r <= 0) return n;
-  }
-  return pool[pool.length-1];
+function sumar(map,k,p){
+  k = fmt(k);
+  map[k] = (map[k] || 0) + p;
 }
 
-function generarSimulaciones(base, motorKey){
-  const config = CONFIG_MOTORES[motorKey] || CONFIG_MOTORES.loteka;
-  const candidatos = unicos([...config.semilla, ...derivadosBase(base)]);
-  const scores = {};
-  candidatos.forEach(n=>scores[n]=1);
-
-  base.forEach((n,idx)=>{
-    const x = parseInt(n,10);
-    const pesoBase = 30 - (idx * 4);
-    const grupo = [
-      fmt(x+1), fmt(x-1), fmt(x+10), fmt(x-10),
-      inverso(n), fmt(x+11), fmt(x-11), fmt(99-x)
-    ];
-    grupo.forEach((g,i)=>{
-      scores[g] = (scores[g] || 1) + Math.max(3, pesoBase - i*2);
-    });
-  });
-
-  config.semilla.forEach((n,i)=>{
-    scores[n] = (scores[n] || 1) + Math.max(5, 28 - i*2);
-  });
-
-  base.forEach(n=>{
-    delete scores[n];
-  });
-
-  const pool = Object.keys(scores);
-  const conteo = {};
-  const SIMS = 100000;
-
-  for(let i=0;i<SIMS;i++){
-    const ticket = [];
-    while(ticket.length < 3){
-      const pick = escogerPonderado(pool, scores);
-      if(!ticket.includes(pick)) ticket.push(pick);
-    }
-    ticket.forEach(n=>{
-      conteo[n] = (conteo[n] || 0) + 1;
-    });
-  }
-
-  const ranking = Object.entries(conteo)
-    .sort((a,b)=>b[1]-a[1])
-    .map(([n,c])=>({n, c, pct:((c/SIMS)*100)}));
-
-  return {ranking, scores, sims:SIMS, motor:config.nombre};
-}
-
-function crearPales(nucleo){
-  return [
-    [nucleo[0],nucleo[1]],
-    [nucleo[0],nucleo[2]],
-    [nucleo[1],nucleo[2]]
-  ];
-}
-
-function crearTripletas(nucleo){
-  return [
-    [nucleo[0],nucleo[1],nucleo[2]],
-    [nucleo[0],nucleo[2],nucleo[1]],
-    [nucleo[1],nucleo[2],nucleo[0]]
-  ];
-}
-
-function construirTickets(nucleo, ranking){
-  const top = ranking.map(x=>x.n);
-  const extras = top.filter(n=>!nucleo.includes(n)).slice(0,12);
-
-  return [
-    nucleo,
-    [nucleo[0], extras[0], extras[1]],
-    [nucleo[1], extras[2], extras[3]],
-    [nucleo[2], extras[4], extras[5]],
-    [extras[0], extras[2], extras[4]],
-    [extras[1], extras[3], extras[5]],
-    [nucleo[0], inverso(nucleo[1]), extras[6]],
-    [nucleo[1], inverso(nucleo[2]), extras[7]],
-    [nucleo[2], inverso(nucleo[0]), extras[8]],
-    [extras[9], extras[10], extras[11]]
-  ].map(t=>unicos(t).slice(0,3)).filter(t=>t.length===3);
-}
-
-function generarNucleoActivo(){
-  const base = parseTresNumeros("ultimoSorteo");
-  if(!base){
-    alert("Coloca 3 números. Ejemplo: 99 21 94");
+function analizarSaltos(){
+  const sorteos = parseHistorial();
+  if(sorteos.length < 3){
+    alert("Pega al menos 3 sorteos para detectar saltos.");
     return;
   }
 
-  const motorKey = document.getElementById("motor").value;
-  const data = generarSimulaciones(base, motorKey);
-  const nucleo = data.ranking.slice(0,3).map(x=>x.n);
-  const pales = crearPales(nucleo);
-  const tripletas = crearTripletas(nucleo);
+  const motor = document.getElementById("motor").value;
+  const semilla = SEMILLAS[motor] || [];
+  const base = sorteos[0];
+  const scores = {};
+  const saltos = {};
+  const repetidos = {};
+  const familias = {};
 
-  ticketsActuales = construirTickets(nucleo, data.ranking);
+  // Frecuencia y supervivencia general
+  sorteos.forEach((sorteo,idx)=>{
+    sorteo.forEach(n=>{
+      sumar(scores,n, Math.max(2, 12-idx));
+      repetidos[n] = (repetidos[n]||0)+1;
+      familias[n[0]] = (familias[n[0]]||0)+1;
+    });
+  });
 
-  document.getElementById("quinielas").innerHTML = nucleo.map(n=>`<div class="item">${n}</div>`).join("");
-  document.getElementById("pales").innerHTML = pales.map(p=>`<div class="item">${p.join(" - ")}</div>`).join("");
-  document.getElementById("tripletas").innerHTML = tripletas.map(t=>`<div class="item">${t.join(" - ")}</div>`).join("");
+  // Saltos entre sorteos consecutivos por posición y cruzados
+  for(let i=0;i<sorteos.length-1;i++){
+    const actual = sorteos[i+1];
+    const siguiente = sorteos[i];
 
-  document.getElementById("tickets").innerHTML = ticketsActuales.map((t,i)=>`
-    <div class="ticket"><strong>Ticket #${i+1}</strong><br>${t.join(" - ")}</div>
-  `).join("");
+    for(let a=0;a<actual.length;a++){
+      for(let b=0;b<siguiente.length;b++){
+        const s = saltoCircular(actual[a], siguiente[b]);
+        saltos[s] = (saltos[s]||0)+1;
+      }
+    }
+  }
 
-  const rankingHTML = data.ranking.slice(0,10).map((x,i)=>`${i+1}. ${x.n} — ${x.c.toLocaleString()} apariciones`).join("<br>");
+  const saltosTop = Object.entries(saltos)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,8)
+    .map(([s,c])=>({s:Number(s),c}));
+
+  // Aplicar saltos dominantes al último sorteo
+  base.forEach(n=>{
+    saltosTop.forEach((obj,idx)=>{
+      const adelante = aplicarSalto(n,obj.s);
+      const atras = aplicarSalto(n,-obj.s);
+      sumar(scores, adelante, 20 - idx*2 + obj.c);
+      sumar(scores, atras, 10 - idx + obj.c);
+      sumar(scores, inv(adelante), 7);
+    });
+    sumar(scores, inv(n), 9);
+    sumar(scores, fmt(Number(n)+1), 8);
+    sumar(scores, fmt(Number(n)-1), 8);
+  });
+
+  // Semilla de la lotería elegida
+  semilla.forEach((n,i)=>sumar(scores,n,Math.max(5,18-i)));
+
+  // Bonos por repetición
+  Object.entries(repetidos).forEach(([n,c])=>{
+    if(c>=2) sumar(scores,n,c*12);
+  });
+
+  // Bonos por familias dominantes
+  const famTop = Object.entries(familias).sort((a,b)=>b[1]-a[1]).slice(0,3).map(x=>x[0]);
+  Object.keys(scores).forEach(n=>{
+    if(famTop.includes(n[0])) scores[n]+=5;
+  });
+
+  // No eliminar base completa: en lotería puede repetir/rebotar, pero le bajamos ruido si salió muy reciente
+  base.forEach(n=>{
+    scores[n] = Math.max(1,(scores[n]||1)-5);
+  });
+
+  const ranking = Object.entries(scores)
+    .sort((a,b)=>b[1]-a[1])
+    .map(([n,score])=>({n,score}));
+
+  paquetesActuales = construirPaquetes(ranking, base, saltosTop);
+
+  pintarPaquete("paqueteA", paquetesActuales[0]);
+  pintarPaquete("paqueteB", paquetesActuales[1]);
+  pintarPaquete("paqueteC", paquetesActuales[2]);
+
+  const saltosHTML = saltosTop.map(x=>`<span class="mini">${x.s>0?"+":""}${x.s} (${x.c})</span>`).join(" ");
+  const repetidosHTML = Object.entries(repetidos).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([n,c])=>`<span class="mini">${n} x${c}</span>`).join(" ");
+  const rankingHTML = ranking.slice(0,12).map((x,i)=>`${i+1}. ${x.n} — ${x.score.toFixed(1)} pts`).join("<br>");
 
   resumenActual =
-`LotePro v21 - Núcleo Activo
-Motor: ${data.motor}
-Base: ${base.join(" - ")}
-Simulaciones: ${data.sims.toLocaleString()}
+`LotePro v23 - Detector de Saltos
+Motor: ${NOMBRES[motor]}
+Base reciente: ${base.join(" - ")}
+Saltos dominantes: ${saltosTop.map(x=>(x.s>0?"+":"")+x.s).join(", ")}
 
-Quinielas: ${nucleo.join(" - ")}
-Palés: ${pales.map(p=>p.join("-")).join(" | ")}
-Tripletas: ${tripletas.map(t=>t.join("-")).join(" | ")}
+Paquete A: ${paquetesActuales[0].join(" - ")}
+Paquete B: ${paquetesActuales[1].join(" - ")}
+Paquete C: ${paquetesActuales[2].join(" - ")}`;
 
-Tickets:
-${ticketsActuales.map((t,i)=>`Ticket #${i+1}: ${t.join(" - ")}`).join("\n")}`;
-
-  document.getElementById("estado").innerHTML =
-    `${data.motor} | Base: ${base.join(" - ")} | ${data.sims.toLocaleString()} simulaciones completadas.<br><br><span class="tag">Top 10 interno:</span><br>${rankingHTML}`;
-
-  document.getElementById("verificacion").innerHTML = "Tickets listos para verificar.";
+  document.getElementById("lectura").innerHTML = `
+    <span class="tag">Motor:</span> ${NOMBRES[motor]}<br>
+    <span class="tag">Base reciente:</span> ${base.join(" - ")}<br>
+    <span class="tag">Saltos dominantes:</span><br>${saltosHTML}<br><br>
+    <span class="tag">Supervivencia/Repetidos:</span><br>${repetidosHTML}<br><br>
+    <span class="tag">Ranking interno:</span><br>${rankingHTML}
+  `;
+  document.getElementById("verificacion").innerHTML = "Paquetes listos para verificar.";
 }
 
-function verificarTickets(){
-  const real = parseTresNumeros("sorteoReal");
-  if(!real){
-    alert("Coloca el sorteo real con 3 números. Ejemplo: 68 74 97");
-    return;
-  }
-  if(!ticketsActuales.length){
-    alert("Primero genera el Núcleo Activo.");
-    return;
+function construirPaquetes(ranking, base, saltosTop){
+  const top = ranking.map(x=>x.n);
+  const usado = new Set();
+
+  function tomar(preferidos=[]){
+    const p = [];
+    [...preferidos, ...top].forEach(n=>{
+      n = fmt(n);
+      if(p.length<4 && !p.includes(n) && !usado.has(n)) p.push(n);
+    });
+    p.forEach(n=>usado.add(n));
+    return p;
   }
 
-  let total = 0;
-  const html = ticketsActuales.map((t,i)=>{
-    const aciertos = t.filter(n=>real.includes(n));
-    let premio = 0;
-    if(aciertos.length === 3) premio = 30000;
-    if(aciertos.length === 2) premio = 1000;
-    total += premio;
+  const salto1 = saltosTop[0]?.s || 1;
+  const salto2 = saltosTop[1]?.s || -1;
+  const salto3 = saltosTop[2]?.s || 10;
 
+  const prefA = base.map(n=>aplicarSalto(n,salto1)).concat(base.map(n=>inv(aplicarSalto(n,salto1))));
+  const prefB = base.map(n=>aplicarSalto(n,salto2)).concat(base.map(n=>fmt(Number(n)+1)));
+  const prefC = base.map(n=>aplicarSalto(n,salto3)).concat(base.map(n=>fmt(Number(n)-1)));
+
+  return [
+    tomar(prefA),
+    tomar(prefB),
+    tomar(prefC)
+  ];
+}
+
+function pintarPaquete(id,p){
+  document.getElementById(id).innerHTML = `<div class="item">${p.join(" - ")}</div>`;
+}
+
+function verificarPaquetes(){
+  const real = parseReal();
+  if(!real){alert("Coloca el sorteo real con 3 números.");return}
+  if(!paquetesActuales.length){alert("Primero analiza los saltos.");return}
+
+  const html = paquetesActuales.map((p,i)=>{
+    const aciertos = p.filter(n=>real.includes(n));
     return `
-      <div class="ticket ${premio>0 ? "win" : ""}">
-        <strong>Ticket #${i+1}</strong><br>
-        Ticket: ${t.join(" - ")}<br>
+      <div class="package ${aciertos.length ? "win" : ""}">
+        <strong>Paquete ${String.fromCharCode(65+i)}</strong><br>
+        Paquete: ${p.join(" - ")}<br>
         Sorteo real: ${real.join(" - ")}<br>
-        Aciertos: ${aciertos.length}${aciertos.length ? " (" + aciertos.join(", ") + ")" : ""}<br>
-        Premio: RD$${premio.toLocaleString()}
+        Aciertos: ${aciertos.length}${aciertos.length ? " ("+aciertos.join(", ")+")" : ""}
       </div>
     `;
   }).join("");
 
-  document.getElementById("verificacion").innerHTML =
-    html + `<div class="total">Total ganado: RD$${total.toLocaleString()}</div>`;
+  const mejor = Math.max(...paquetesActuales.map(p=>p.filter(n=>real.includes(n)).length));
+  document.getElementById("verificacion").innerHTML = html + `<div class="total">Mejor paquete: ${mejor} acierto(s)</div>`;
 }
 
-function copiarTickets(){
-  if(!resumenActual){
-    alert("Primero genera el Núcleo Activo.");
-    return;
-  }
-  navigator.clipboard.writeText(resumenActual).then(()=>{
-    alert("Tickets copiados.");
-  }).catch(()=>{
+function copiarPaquetes(){
+  if(!resumenActual){alert("Primero analiza los saltos.");return}
+  navigator.clipboard.writeText(resumenActual).then(()=>alert("Paquetes copiados.")).catch(()=>{
     const area = document.createElement("textarea");
     area.value = resumenActual;
     document.body.appendChild(area);
     area.select();
     document.execCommand("copy");
     area.remove();
-    alert("Tickets copiados.");
+    alert("Paquetes copiados.");
   });
 }
 
-document.getElementById("ultimoSorteo").addEventListener("keydown", e=>{
-  if(e.key === "Enter"){
-    e.preventDefault();
-    generarNucleoActivo();
-  }
-});
-
-document.getElementById("sorteoReal").addEventListener("keydown", e=>{
-  if(e.key === "Enter"){
-    e.preventDefault();
-    verificarTickets();
-  }
-});
+document.getElementById("historial").value =
+`83 48 35
+37 56 11
+99 21 94
+00 15 75
+14 41 59
+93 57 32
+62 44 83
+97 85 65
+02 50 31
+29 85 81
+77 32 35
+75 65 16`;
 </script>
-</body>
-</html>
+
+
+</body></html>
