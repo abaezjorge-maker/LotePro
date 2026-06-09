@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- saved from url=(0061)file:///C:/Users/Andy/Downloads/LotePro_Tiempos_Loterias.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LotePro | Matrix Cube + Tómbolas</title>
   <style>
     :root{
@@ -474,6 +474,22 @@
 
     <div class="tombola-section">
       <h2>🎰 Tómbolas</h2>
+<div class="box" style="margin-bottom:15px;">
+  <div class="box-title">🎰 Lotería</div>
+  <select id="loteriaSelect" style="width:100%;padding:10px;border-radius:10px;">
+    <option>Loteka</option>
+    <option>Anguilas</option>
+    <option>La Primera Día</option>
+    <option>La Suerte Día</option>
+    <option>La Real</option>
+    <option>Gana Más</option>
+    <option>La Suerte Tarde</option>
+    <option>La Primera Noche</option>
+    <option>New York Noche</option>
+  </select>
+  <p id="tiempoInfo">⏱ Tiempo de máquina: 8 segundos</p>
+</div>
+
       <p>Presiona el botón para girar las 3 tómbolas durante 8 segundos y generar 3 números.</p>
 
       <div class="tombola-row">
@@ -534,6 +550,31 @@ function toggleTheme(){
 document.addEventListener("DOMContentLoaded", aplicarTemaGuardado);
 
 const DURACION = 8000;
+
+const LOTERIAS={
+"Loteka":8000,
+"Anguilas":8000,
+"La Primera Día":8000,
+"La Suerte Día":8000,
+"La Real":8000,
+"Gana Más":8000,
+"La Suerte Tarde":8000,
+"La Primera Noche":8000,
+"New York Noche":8000
+};
+
+function obtenerDuracionActual(){
+ const loteria=document.getElementById("loteriaSelect")?.value || "Loteka";
+ return LOTERIAS[loteria] || 8000;
+}
+
+document.addEventListener("change",e=>{
+ if(e.target.id==="loteriaSelect"){
+   document.getElementById("tiempoInfo").textContent =
+   "⏱ Tiempo de máquina: "+(obtenerDuracionActual()/1000)+" segundos";
+ }
+});
+
 const VELOCIDAD = 75;
 const MAX_HISTORIAL = 10;
 
@@ -608,7 +649,7 @@ function generarTombolas(){
   pintarRapido();
 
   intervalo = setInterval(pintarRapido, VELOCIDAD);
-  timeout = setTimeout(finalizar, DURACION);
+  timeout = setTimeout(finalizar, obtenerDuracionActual());
 }
 
 function renderHistorial(){
@@ -661,5 +702,5 @@ function limpiarHistorial(){
   renderFrecuencia();
 }
 </script>
-</body>
-</html>
+
+</body></html>
