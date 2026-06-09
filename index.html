@@ -5,11 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LotePro | Matrix Cube + Tómbolas</title>
   <style>
+    :root{
+      --body-bg:radial-gradient(circle at top,#14213d,#050505 65%);
+      --text-main:#ffffff;
+      --text-soft:#cbd5e1;
+      --text-muted:#94a3b8;
+      --panel-bg:rgba(255,255,255,.08);
+      --panel-border:rgba(255,255,255,.18);
+      --card-bg:rgba(0,0,0,.32);
+      --card-bg-2:rgba(0,0,0,.25);
+      --mini-bg:rgba(255,255,255,.05);
+      --accent:#00f5ff;
+      --accent-soft:#7dd3fc;
+      --line:#cbd5e1;
+      --ghost:#64748b;
+      --chip-text:#dffcff;
+      --shadow:0 0 40px rgba(0,245,255,.18);
+    }
+    body.light-mode{
+      --body-bg:radial-gradient(circle at top,#e0faff,#f8fafc 62%);
+      --text-main:#0f172a;
+      --text-soft:#1e293b;
+      --text-muted:#334155;
+      --panel-bg:rgba(255,255,255,.82);
+      --panel-border:rgba(14,165,233,.32);
+      --card-bg:rgba(255,255,255,.72);
+      --card-bg-2:rgba(248,250,252,.88);
+      --mini-bg:rgba(14,165,233,.08);
+      --accent:#0284c7;
+      --accent-soft:#0369a1;
+      --line:#1e293b;
+      --ghost:#475569;
+      --chip-text:#0f172a;
+      --shadow:0 0 35px rgba(14,165,233,.18);
+    }
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
     body{
       min-height:100vh;
-      background:radial-gradient(circle at top,#14213d,#050505 65%);
-      color:white;
+      background:var(--body-bg);
+      color:var(--text-main);
       padding:20px;
       display:flex;
       justify-content:center;
@@ -18,12 +52,12 @@
     .container{
       width:100%;
       max-width:760px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.18);
+      background:var(--panel-bg);
+      border:1px solid var(--panel-border);
       border-radius:28px;
       padding:32px 22px;
       text-align:center;
-      box-shadow:0 0 40px rgba(0,245,255,.18);
+      box-shadow:var(--shadow);
       backdrop-filter:blur(12px);
     }
     h1{
@@ -34,13 +68,13 @@
       color:transparent;
     }
     .sub{
-      color:#cbd5e1;
+      color:var(--text-soft);
       font-size:14px;
       line-height:1.6;
       margin-bottom:18px;
     }
     p{
-      color:#94a3b8;
+      color:var(--text-muted);
       font-size:13px;
       margin:8px 0 16px;
       line-height:1.5;
@@ -51,7 +85,7 @@
       border:none;
       border-radius:18px;
       background:linear-gradient(90deg,#00f5ff,#ff00ff);
-      color:white;
+      color:var(--text-main);
       font-size:16px;
       font-weight:bold;
       cursor:pointer;
@@ -142,7 +176,7 @@
     .matrix-text{
       position:relative;
       z-index:2;
-      color:#00f5ff;
+      color:var(--accent);
       font-weight:bold;
       font-size:13px;
       letter-spacing:.5px;
@@ -164,19 +198,19 @@
       border-radius:999px;
       background:rgba(0,245,255,.10);
       border:1px solid rgba(0,245,255,.22);
-      color:#dffcff;
+      color:var(--chip-text);
     }
 
     /* TÓMBOLAS */
     .tombola-section{
       padding:22px;
       border-radius:24px;
-      background:rgba(0,0,0,.32);
+      background:var(--card-bg);
       border:1px solid rgba(0,245,255,.28);
       box-shadow:0 0 30px rgba(0,245,255,.08) inset;
     }
     .tombola-section h2{
-      color:#00f5ff;
+      color:var(--accent);
       font-size:24px;
       margin-bottom:6px;
     }
@@ -196,7 +230,7 @@
     }
     .tombola-label{
       font-size:12px;
-      color:#7dd3fc;
+      color:var(--accent-soft);
       letter-spacing:1px;
       font-weight:bold;
     }
@@ -255,7 +289,7 @@
       border-radius:999px;
       background:rgba(0,245,255,.12);
       border:1px solid rgba(0,245,255,.35);
-      color:#7dd3fc;
+      color:var(--accent-soft);
       font-size:13px;
       font-weight:bold;
       font-family:Consolas,monospace;
@@ -277,13 +311,13 @@
       border:1px solid rgba(0,245,255,.22);
       font-size:15px;
       font-weight:bold;
-      color:#e0f2fe;
+      color:var(--text-soft);
       letter-spacing:1px;
       text-align:center;
     }
     .last span{color:#00f5ff}
     .box{
-      background:rgba(0,0,0,.25);
+      background:var(--card-bg-2);
       border:1px solid rgba(255,255,255,.10);
       border-radius:16px;
       padding:12px 14px;
@@ -293,14 +327,14 @@
       overflow-y:auto;
     }
     .box-title{
-      color:#7dd3fc;
+      color:var(--accent-soft);
       font-size:13px;
       font-weight:bold;
       margin-bottom:7px;
     }
     .line{
       font-size:13px;
-      color:#cbd5e1;
+      color:var(--text-soft);
       font-family:Consolas,monospace;
       padding:4px 0;
       border-bottom:1px solid rgba(255,255,255,.06);
@@ -366,6 +400,36 @@
     }
     @keyframes numBlink{0%,100%{opacity:.9}50%{opacity:.35}}
 
+
+    .theme-toggle{
+      position:fixed;
+      top:18px;
+      right:18px;
+      z-index:50;
+      width:auto;
+      min-width:132px;
+      padding:11px 14px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#0284c7,#7c3aed);
+      color:#ffffff;
+      border:1px solid rgba(255,255,255,.45);
+      box-shadow:0 0 22px rgba(0,245,255,.25);
+      font-size:13px;
+    }
+    body.light-mode .theme-toggle{
+      background:linear-gradient(90deg,#0ea5e9,#8b5cf6);
+      color:#ffffff;
+      border-color:rgba(15,23,42,.18);
+    }
+    body.light-mode .cube-face{
+      background:rgba(15,23,42,.88);
+    }
+    body.light-mode .tombola-num{
+      color:#ffffff;
+    }
+    body.light-mode .last span{
+      color:var(--accent);
+    }
     @media(max-width:520px){
       h1{font-size:34px}
       .container{padding:26px 16px}
@@ -376,16 +440,17 @@
   </style>
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ Modo claro</button>
   <div class="container">
     <h1>LotePro</h1>
     <div class="sub">🧬 Matrix Cube + 🎰 Tómbolas</div>
 
     <div style="margin:15px 0 25px;padding:15px;border-radius:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,245,255,.25);">
-      <h3 style="color:#00f5ff;margin-bottom:10px;">📖 Cómo usar el sistema</h3>
-      <div style="padding:6px;color:#e2e8f0;font-size:14px;">1️⃣ Aplica Pirámide al sorteo anterior</div>
-      <div style="padding:6px;color:#e2e8f0;font-size:14px;">2️⃣ Genera números con las Tómbolas</div>
-      <div style="padding:6px;color:#e2e8f0;font-size:14px;">3️⃣ Apunta las coincidencias</div>
-      <div style="padding:6px;color:#e2e8f0;font-size:14px;">4️⃣ Ya tienes la Jugada 🎯</div>
+      <h3 style="color:var(--accent);margin-bottom:10px;">📖 Cómo usar el sistema</h3>
+      <div style="padding:6px;color:var(--text-soft);font-size:14px;">1️⃣ Aplica Pirámide al sorteo anterior</div>
+      <div style="padding:6px;color:var(--text-soft);font-size:14px;">2️⃣ Genera números con las Tómbolas</div>
+      <div style="padding:6px;color:var(--text-soft);font-size:14px;">3️⃣ Apunta las coincidencias</div>
+      <div style="padding:6px;color:var(--text-soft);font-size:14px;">4️⃣ Ya tienes la Jugada 🎯</div>
     </div>
 
     <div class="matrix-loader">
@@ -440,17 +505,34 @@
 
       <div class="box">
         <div class="box-title">📜 Historial de Tómbolas</div>
-        <div id="historial"><div class="line" style="color:#64748b">Sin tiradas aún...</div></div>
+        <div id="historial"><div class="line" style="color:var(--ghost)">Sin tiradas aún...</div></div>
       </div>
 
       <div class="box">
         <div class="box-title">🔥 Frecuencia de Tómbolas</div>
-        <div class="freq-grid" id="frecuencia"><span style="color:#64748b;font-size:12px">Sin datos aún...</span></div>
+        <div class="freq-grid" id="frecuencia"><span style="color:var(--ghost);font-size:12px">Sin datos aún...</span></div>
       </div>
     </div>
   </div>
 
 <script>
+function aplicarTemaGuardado(){
+  const tema = localStorage.getItem("lotepro-tema") || "oscuro";
+  document.body.classList.toggle("light-mode", tema === "claro");
+  const btn = document.getElementById("themeToggle");
+  if(btn){
+    btn.textContent = tema === "claro" ? "🌙 Modo oscuro" : "☀️ Modo claro";
+  }
+}
+
+function toggleTheme(){
+  const claro = document.body.classList.toggle("light-mode");
+  localStorage.setItem("lotepro-tema", claro ? "claro" : "oscuro");
+  document.getElementById("themeToggle").textContent = claro ? "🌙 Modo oscuro" : "☀️ Modo claro";
+}
+
+document.addEventListener("DOMContentLoaded", aplicarTemaGuardado);
+
 const DURACION = 8000;
 const VELOCIDAD = 75;
 const MAX_HISTORIAL = 10;
@@ -533,7 +615,7 @@ function renderHistorial(){
   const box = document.getElementById("historial");
 
   if(!historial.length){
-    box.innerHTML = '<div class="line" style="color:#64748b">Sin tiradas aún...</div>';
+    box.innerHTML = '<div class="line" style="color:var(--ghost)">Sin tiradas aún...</div>';
     return;
   }
 
@@ -550,7 +632,7 @@ function renderFrecuencia(){
     .slice(0,15);
 
   if(!top.length){
-    box.innerHTML = '<span style="color:#64748b;font-size:12px">Sin datos aún...</span>';
+    box.innerHTML = '<span style="color:var(--ghost);font-size:12px">Sin datos aún...</span>';
     return;
   }
 
