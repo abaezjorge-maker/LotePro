@@ -298,11 +298,30 @@ function cercanos(n){
 }
 
 function parseHistoricos(){
-  const txt = document.getElementById("historicos").value.trim();
+  const campo = document.getElementById("historicos");
+  const txt = campo ? campo.value.trim() : "";
   if(!txt) return [];
-  return txt.split(/\\n+/)
-    .map(linea => [...new Set((linea.match(/\\d+/g)||[]).map(fmt).filter(Boolean))])
-    .filter(x=>x.length);
+
+  // Lee cualquier formato: líneas, espacios, guiones, comas.
+  // Si encuentra líneas, cada línea es un sorteo.
+  const lineas = txt.split(/\r?\n+/)
+    .map(l => l.trim())
+    .filter(Boolean);
+
+  let sorteos = lineas.map(linea =>
+    [...new Set((linea.match(/\d+/g) || []).map(fmt).filter(Boolean))]
+  ).filter(x => x.length);
+
+  // Respaldo: si el navegador no detecta líneas, agrupa todos los números de 3 en 3.
+  if(!sorteos.length){
+    const todos = (txt.match(/\d+/g) || []).map(fmt).filter(Boolean);
+    for(let i=0;i<todos.length;i+=3){
+      const grupo = [...new Set(todos.slice(i,i+3))];
+      if(grupo.length) sorteos.push(grupo);
+    }
+  }
+
+  return sorteos;
 }
 
 function contar(hist){
@@ -373,7 +392,7 @@ function pick(pool, usados=new Set()){
 function generarTodo(){
   const hist = parseHistoricos();
   if(!hist.length){
-    alert("Pega tus sorteos primero.");
+    alert("No pude leer números del campo. Verifica que estés usando este archivo corregido y que el campo no esté vacío.");
     return;
   }
 
