@@ -633,6 +633,42 @@
       background:linear-gradient(90deg,#059669,#22c55e);
     }
 
+    .comparador-real{
+      margin-top:10px;
+      padding:13px;
+      border-radius:16px;
+      background:rgba(34,197,94,.06);
+      border:1px solid rgba(34,197,94,.25);
+      text-align:left;
+    }
+    .comparador-real textarea{
+      width:100%;
+      min-height:54px;
+      margin-top:8px;
+      padding:12px;
+      border-radius:13px;
+      border:1px solid rgba(0,245,255,.25);
+      background:rgba(0,0,0,.32);
+      color:var(--text-main);
+      font-family:Consolas,monospace;
+      font-size:14px;
+      outline:none;
+      resize:vertical;
+    }
+    body.light-mode .comparador-real textarea{
+      background:rgba(255,255,255,.72);
+      color:var(--text-main);
+      border-color:rgba(2,132,199,.35);
+    }
+    .compare-hit{
+      color:#86efac;
+      font-weight:bold;
+    }
+    .compare-miss{
+      color:#fca5a5;
+      font-weight:bold;
+    }
+
     /* === Ajuste final: cubo grande + flujo automático 2 minutos === */
     .container{
       max-width:920px !important;
@@ -795,6 +831,14 @@
         <div class="box-title">🏆 Jugadas calientes finales</div>
         <div id="jugadasFinales" class="resultado-jugada">Activa ⏱️ Generar 2 minutos. Al terminar, las mejores jugadas saldrán automáticamente.</div>
         <button class="btn-copy" onclick="copiarJugadasFinales()">📋 Copiar jugadas finales</button>
+      </div>
+
+      <div class="comparador-real">
+        <div class="box-title">🎯 Comparar con resultado real</div>
+        <p>Pega el resultado real de 3 números. Ejemplo: <strong>22-13-45</strong></p>
+        <textarea id="resultadoRealInput" placeholder="22-13-45"></textarea>
+        <button class="btn-hot" onclick="compararConResultadoReal()">🎯 Comparar aciertos</button>
+        <div id="comparacionReal" class="resultado-jugada">La comparación aparecerá aquí.</div>
       </div>
     </div>
   </div>
@@ -1022,6 +1066,7 @@ function renderFrecuencia(){
 }
 
 let ultimaJugadaFinal = "";
+let ultimasJugadas = {tripletas:[], pales:[], quinielas:[]};
 
 function obtenerTopCalientes(cantidad){
   let top = Object.entries(frecuencia)
@@ -1059,6 +1104,8 @@ function generarJugadasCalientes(){
 
   const quinielas = top.slice(20,23);
 
+  ultimasJugadas = {tripletas, pales, quinielas};
+
   ultimaJugadaFinal = `TRIPLETAS: ${tripletas.map(t=>t.join("-")).join(", ")}
 PALES: ${pales.map(p=>p.join("-")).join(", ")}
 QUINIELAS: ${quinielas.map(q=>"Q"+q).join(" , ")}`;
@@ -1067,6 +1114,80 @@ QUINIELAS: ${quinielas.map(q=>"Q"+q).join(" , ")}`;
   if(box){
     box.textContent = ultimaJugadaFinal;
   }
+}
+
+
+function limpiarResultadoReal(texto){
+  return texto
+    .replace(/[^\d]+/g," ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(n=>fmt(Number(n)))
+    .filter(n=>Number(n)>=0 && Number(n)<=99)
+    .slice(0,3);
+}
+
+function compararConResultadoReal(){
+  const input = document.getElementById("resultadoRealInput");
+  const real = limpiarResultadoReal(input ? input.value : "");
+  const box = document.getElementById("comparacionReal");
+
+  if(real.length !== 3){
+    alert("Pega exactamente 3 números reales. Ejemplo: 22-13-45");
+    return;
+  }
+
+  if(!ultimaJugadaFinal || !ultimasJugadas.tripletas.length){
+    generarJugadasCalientes();
+  }
+
+  const realSet = new Set(real);
+
+  const tripletasEval = ultimasJugadas.tripletas.map(t=>{
+    const exacta = t.join("-") === real.join("-");
+    const contiene3 = t.every(n=>realSet.has(n));
+    const hits = t.filter(n=>realSet.has(n)).length;
+    return {jugada:t.join("-"), acierto:exacta || contiene3, hits};
+  });
+
+  const palesEval = ultimasJugadas.pales.map(p=>{
+    const hits = p.filter(n=>realSet.has(n)).length;
+    return {jugada:p.join("-"), acierto:hits === 2, hits};
+  });
+
+  const quinielasEval = ultimasJugadas.quinielas.map(q=>{
+    const acierto = realSet.has(q);
+    return {jugada:"Q"+q, acierto, hits:acierto ? 1 : 0};
+  });
+
+  const aciertosTripletas = tripletasEval.filter(x=>x.acierto).length;
+  const aciertosPales = palesEval.filter(x=>x.acierto).length;
+  const aciertosQuinielas = quinielasEval.filter(x=>x.acierto).length;
+  const totalJugadas = tripletasEval.length + palesEval.length + quinielasEval.length;
+  const totalAciertos = aciertosTripletas + aciertosPales + aciertosQuinielas;
+  const tasa = totalJugadas ? ((totalAciertos / totalJugadas) * 100).toFixed(1) : "0.0";
+  const numerosCoincidentes = obtenerTopCalientes(23).filter(n=>realSet.has(n));
+
+  function pintar(lista){
+    return lista.map(x=>`${x.acierto ? "✅" : "❌"} ${x.jugada} (${x.hits})`).join("\n");
+  }
+
+  const reporte = `RESULTADO REAL: ${real.join("-")}
+
+TRIPLETAS: ${aciertosTripletas}/${tripletasEval.length}
+${pintar(tripletasEval)}
+
+PALES: ${aciertosPales}/${palesEval.length}
+${pintar(palesEval)}
+
+QUINIELAS: ${aciertosQuinielas}/${quinielasEval.length}
+${pintar(quinielasEval)}
+
+TASA FINAL: ${totalAciertos}/${totalJugadas} = ${tasa}%
+NÚMEROS CALIENTES QUE SALIERON: ${numerosCoincidentes.length ? numerosCoincidentes.join(" - ") : "ninguno"}`;
+
+  if(box) box.textContent = reporte;
 }
 
 function copiarJugadasFinales(){
@@ -1117,6 +1238,11 @@ function limpiarHistorial(){
 
   document.getElementById("last").textContent = "--";
   ultimaJugadaFinal = "";
+  ultimasJugadas = {tripletas:[], pales:[], quinielas:[]};
+  const comparacionBox = document.getElementById("comparacionReal");
+  if(comparacionBox) comparacionBox.textContent = "La comparación aparecerá aquí.";
+  const realInput = document.getElementById("resultadoRealInput");
+  if(realInput) realInput.value = "";
   const jugadasBox = document.getElementById("jugadasFinales");
   if(jugadasBox) jugadasBox.textContent = "Activa ⏱️ Generar 2 minutos. Al terminar, las mejores jugadas saldrán automáticamente.";
   renderHistorial();
