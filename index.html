@@ -1030,6 +1030,68 @@
       }
     }
 
+
+    /* === Observaciones Manuales Elite === */
+    .observaciones-elite{
+      margin-top:10px;
+      padding:13px;
+      border-radius:16px;
+      background:rgba(168,85,247,.07);
+      border:1px solid rgba(168,85,247,.30);
+      text-align:left;
+    }
+    .observaciones-elite textarea{
+      width:100%;
+      min-height:78px;
+      margin-top:8px;
+      padding:12px;
+      border-radius:13px;
+      border:1px solid rgba(168,85,247,.34);
+      background:rgba(0,0,0,.32);
+      color:var(--text-main);
+      font-family:Consolas,monospace;
+      font-size:14px;
+      outline:none;
+      resize:vertical;
+    }
+    body.light-mode .observaciones-elite textarea{
+      background:rgba(255,255,255,.72);
+      color:var(--text-main);
+      border-color:rgba(124,58,237,.35);
+    }
+    .obs-actions{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:8px;
+      margin-top:8px;
+    }
+    .obs-actions button{
+      margin-top:0;
+      min-height:44px;
+      font-size:13px;
+      border-radius:13px;
+    }
+    .obs-history{
+      margin-top:10px;
+      padding:10px;
+      border-radius:13px;
+      background:rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.10);
+      max-height:155px;
+      overflow:auto;
+      font-family:Consolas,monospace;
+      color:var(--text-soft);
+      font-size:12px;
+      white-space:pre-wrap;
+    }
+    body.light-mode .obs-history{
+      background:rgba(255,255,255,.58);
+      border-color:rgba(15,23,42,.10);
+    }
+    .btn-obs{
+      background:linear-gradient(90deg,#7c3aed,#00f5ff);
+    }
+
   </style>
 </head>
 <body>
@@ -1126,6 +1188,20 @@
         <button class="btn-hot" onclick="compararConResultadoReal()">🎯 Comparar aciertos</button>
         <div id="comparacionReal" class="resultado-jugada">La comparación aparecerá aquí.</div>
       </div>
+
+      <div class="observaciones-elite">
+        <div class="box-title">🧠 Observaciones Manuales Elite</div>
+        <p>Escribe lo que tú notaste y el sistema no ve solo. Ejemplo: <strong>salió 39 y el sistema tenía 93; considerar inversos 39-93; familia 55 activa</strong>.</p>
+        <textarea id="observacionManualInput" placeholder="Escribe aquí tu observación del día...
+Ejemplo: El sistema dio 93 y salió 39. Tomar inversos y familia cercana."></textarea>
+        <div class="obs-actions">
+          <button class="btn-obs" onclick="guardarObservacionManual()">📌 Guardar observación</button>
+          <button class="btn-copy" onclick="aplicarObservacionesAlMotor()">⚡ Reforzar motor</button>
+          <button class="btn-clear" onclick="limpiarObservacionesManual()">🗑️ Limpiar observaciones</button>
+        </div>
+        <div id="historialObservaciones" class="obs-history">Sin observaciones guardadas todavía.</div>
+      </div>
+
     </div>
   </div>
 
@@ -1160,6 +1236,7 @@
       <li>Al finalizar generará automáticamente 4 tripletas, 4 palés y 3 quinielas.</li>
       <li>Cuando salga el resultado real, pégalo en <strong>Comparar con resultado real</strong>.</li>
       <li>El sistema mostrará aciertos, coincidencias y tasa final.</li>
+      <li>En <strong>Observaciones Manuales Elite</strong> escribe patrones que tú detectes: inversos, familias, cercanos, espejos o números que casi salieron. Luego usa <strong>⚡ Reforzar motor</strong> para que esas notas aumenten el peso de futuras jugadas.</li>
     </ol>
     <div class="help-warning">⚠️ LotePro es una herramienta estadística. No garantiza premios ni resultados exactos.</div>
     <button class="help-close" onclick="toggleHelpPanel(false)">❌ Cerrar</button>
@@ -1223,6 +1300,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     btn.style.opacity = "1";
     btn.onclick = toggleTheme;
   }
+  renderObservacionesManual();
 });
 
 const DURACION = 8000;
@@ -1446,11 +1524,136 @@ function renderFrecuencia(){
 
 let ultimaJugadaFinal = "";
 let ultimasJugadas = {tripletas:[], pales:[], quinielas:[]};
+const KEY_OBSERVACIONES_MANUALES = "loteproObservacionesElite";
+
+function obtenerObservacionesManual(){
+  try{
+    return JSON.parse(localStorage.getItem(KEY_OBSERVACIONES_MANUALES) || "[]");
+  }catch(e){
+    return [];
+  }
+}
+
+function guardarObservacionesManual(lista){
+  localStorage.setItem(KEY_OBSERVACIONES_MANUALES, JSON.stringify(lista.slice(-80)));
+}
+
+function extraerNumerosObservacion(texto){
+  const encontrados = texto
+    .replace(/[^\d]+/g," ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(n=>Number(n))
+    .filter(n=>n>=0 && n<=99);
+  return [...new Set(encontrados.map(fmt))];
+}
+
+function invertirNumeroTexto(n){
+  return fmt(Number(String(n).padStart(2,"0").split("").reverse().join("")));
+}
+
+function obtenerPesosObservaciones(){
+  const pesos = {};
+  const observaciones = obtenerObservacionesManual();
+
+  observaciones.forEach(item=>{
+    const texto = String(item.texto || "").toLowerCase();
+    const numeros = extraerNumerosObservacion(texto);
+    const mencionaInverso = /invers|espej|rev[eé]s|voltead/.test(texto);
+    const mencionaCerca = /familia|cerca|cercan|vecin|al lado|pegad|salto/.test(texto);
+
+    numeros.forEach(n=>{
+      pesos[n] = (pesos[n] || 0) + 3;
+
+      if(mencionaInverso){
+        const inv = invertirNumeroTexto(n);
+        pesos[inv] = (pesos[inv] || 0) + 2;
+      }
+
+      if(mencionaCerca){
+        const base = Number(n);
+        [base-1, base+1].forEach(v=>{
+          if(v>=0 && v<=99){
+            const f = fmt(v);
+            pesos[f] = (pesos[f] || 0) + 1;
+          }
+        });
+      }
+    });
+  });
+
+  return pesos;
+}
+
+function renderObservacionesManual(){
+  const box = document.getElementById("historialObservaciones");
+  if(!box) return;
+  const lista = obtenerObservacionesManual();
+  if(!lista.length){
+    box.textContent = "Sin observaciones guardadas todavía.";
+    return;
+  }
+  box.textContent = lista.slice(-10).reverse().map((x,i)=>`#${lista.length-i} • ${x.fecha}\n${x.texto}`).join("\n\n");
+}
+
+function guardarObservacionManual(){
+  const input = document.getElementById("observacionManualInput");
+  const texto = input ? input.value.trim() : "";
+  if(!texto){
+    alert("Escribe una observación primero.");
+    return;
+  }
+  const lista = obtenerObservacionesManual();
+  lista.push({
+    fecha:new Date().toLocaleString(),
+    texto,
+    numeros:extraerNumerosObservacion(texto)
+  });
+  guardarObservacionesManual(lista);
+  if(input) input.value = "";
+  renderObservacionesManual();
+  aplicarObservacionesAlMotor(false);
+  alert("Observación guardada y aplicada al motor.");
+}
+
+function aplicarObservacionesAlMotor(mostrar=true){
+  const pesos = obtenerPesosObservaciones();
+  const tienePesos = Object.keys(pesos).length > 0;
+  if(!tienePesos){
+    if(mostrar) alert("Todavía no hay observaciones con números para reforzar.");
+    return;
+  }
+  generarJugadasCalientes();
+  if(mostrar){
+    alert("Observaciones aplicadas. Las jugadas calientes fueron recalculadas con tus notas.");
+  }
+}
+
+function limpiarObservacionesManual(){
+  if(!confirm("¿Seguro que deseas borrar todas las observaciones manuales?")) return;
+  localStorage.removeItem(KEY_OBSERVACIONES_MANUALES);
+  renderObservacionesManual();
+  alert("Observaciones borradas.");
+}
+
 
 function obtenerTopCalientes(cantidad){
-  let top = Object.entries(frecuencia)
-    .sort((a,b)=>b[1]-a[1] || Number(a[0])-Number(b[0]))
-    .map(([n])=>n);
+  const pesosObs = obtenerPesosObservaciones();
+  let top = [];
+
+  for(let i=0;i<=99;i++){
+    const n = fmt(i);
+    const veces = frecuencia[n] || 0;
+    const pesoObs = pesosObs[n] || 0;
+    if(veces > 0 || pesoObs > 0){
+      top.push({n, score:(veces * 4) + pesoObs, veces, pesoObs});
+    }
+  }
+
+  top = top
+    .sort((a,b)=>b.score-a.score || b.veces-a.veces || b.pesoObs-a.pesoObs || Number(a.n)-Number(b.n))
+    .map(x=>x.n);
 
   // Si todavía no hay suficientes datos, rellena sin repetir para que siempre entregue el bloque completo.
   let usados = new Set(top);
@@ -1485,9 +1688,11 @@ function generarJugadasCalientes(){
 
   ultimasJugadas = {tripletas, pales, quinielas};
 
+  const obsUsadas = Object.keys(obtenerPesosObservaciones()).length;
+
   ultimaJugadaFinal = `TRIPLETAS: ${tripletas.map(t=>t.join("-")).join(", ")}
 PALES: ${pales.map(p=>p.join("-")).join(", ")}
-QUINIELAS: ${quinielas.map(q=>"Q"+q).join(" , ")}`;
+QUINIELAS: ${quinielas.map(q=>"Q"+q).join(" , ")}${obsUsadas ? "\nOBSERVACIONES APLICADAS: " + obsUsadas + " número(s) reforzado(s)" : ""}`;
 
   const box = document.getElementById("jugadasFinales");
   if(box){
@@ -1564,7 +1769,9 @@ QUINIELAS: ${aciertosQuinielas}/${quinielasEval.length}
 ${pintar(quinielasEval)}
 
 TASA FINAL: ${totalAciertos}/${totalJugadas} = ${tasa}%
-NÚMEROS CALIENTES QUE SALIERON: ${numerosCoincidentes.length ? numerosCoincidentes.join(" - ") : "ninguno"}`;
+NÚMEROS CALIENTES QUE SALIERON: ${numerosCoincidentes.length ? numerosCoincidentes.join(" - ") : "ninguno"}
+
+🧠 Si notaste inversos, familias o cercanos que el sistema no marcó, escríbelo abajo en Observaciones Manuales Elite y presiona 📌 Guardar observación.`;
 
   if(box) box.textContent = reporte;
 }
