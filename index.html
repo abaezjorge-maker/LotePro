@@ -633,23 +633,89 @@
       background:linear-gradient(90deg,#059669,#22c55e);
     }
 
+    /* === Ajuste final: cubo grande + flujo automático 2 minutos === */
+    .container{
+      max-width:920px !important;
+      padding:18px !important;
+    }
+    .matrix-loader{
+      min-height:360px !important;
+      display:flex !important;
+      flex-direction:column !important;
+      align-items:center !important;
+      justify-content:center !important;
+      margin:0 auto 16px !important;
+      padding:26px 12px !important;
+      border-radius:26px !important;
+    }
+    .cube-scene{
+      width:280px !important;
+      height:280px !important;
+      perspective:1200px !important;
+    }
+    .rubik-cube{
+      width:210px !important;
+      height:210px !important;
+      margin:35px auto !important;
+    }
+    .cube-face{
+      width:210px !important;
+      height:210px !important;
+      gap:8px !important;
+      padding:10px !important;
+      border-radius:14px !important;
+      box-shadow:0 0 34px rgba(0,245,255,.55);
+    }
+    .cube-face span{
+      border-radius:12px !important;
+      box-shadow:0 0 18px rgba(0,255,136,.72), inset 0 0 14px rgba(255,255,255,.12) !important;
+    }
+    .cube-face.front{transform:rotateY(0deg) translateZ(105px) !important}
+    .cube-face.back{transform:rotateY(180deg) translateZ(105px) !important}
+    .cube-face.right{transform:rotateY(90deg) translateZ(105px) !important}
+    .cube-face.left{transform:rotateY(-90deg) translateZ(105px) !important}
+    .cube-face.top{transform:rotateX(90deg) translateZ(105px) !important}
+    .cube-face.bottom{transform:rotateX(-90deg) translateZ(105px) !important}
+    .matrix-text{
+      font-size:19px !important;
+      margin-top:8px !important;
+      text-shadow:0 0 18px rgba(0,245,255,.95);
+    }
+    .matrix-steps span{
+      font-size:13px !important;
+      padding:7px 14px !important;
+    }
+    .controls{
+      grid-template-columns:1fr 1fr;
+    }
+    .btn-infinite{
+      font-size:16px !important;
+      min-height:52px;
+    }
+    .jugadas-finales{
+      border-color:rgba(0,245,255,.42);
+      box-shadow:0 0 26px rgba(0,245,255,.10) inset;
+    }
+    @media(max-width:620px){
+      .matrix-loader{min-height:300px !important}
+      .cube-scene{width:220px !important;height:220px !important}
+      .rubik-cube{width:165px !important;height:165px !important;margin:27px auto !important}
+      .cube-face{width:165px !important;height:165px !important;gap:6px !important;padding:8px !important}
+      .cube-face.front{transform:rotateY(0deg) translateZ(82.5px) !important}
+      .cube-face.back{transform:rotateY(180deg) translateZ(82.5px) !important}
+      .cube-face.right{transform:rotateY(90deg) translateZ(82.5px) !important}
+      .cube-face.left{transform:rotateY(-90deg) translateZ(82.5px) !important}
+      .cube-face.top{transform:rotateX(90deg) translateZ(82.5px) !important}
+      .cube-face.bottom{transform:rotateX(-90deg) translateZ(82.5px) !important}
+      .controls{display:block}
+    }
+
   </style>
 </head>
 <body>
   <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️ Modo claro</button>
   <div class="container">
-    <h1>LotePro</h1>
-    <div class="sub">🧬 Matrix Cube + 🎰 Tómbolas</div>
-
-    <div style="margin:15px 0 25px;padding:15px;border-radius:15px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,245,255,.25);">
-      <h3 style="color:var(--accent);margin-bottom:10px;">📖 Cómo usar el sistema</h3>
-      <div style="padding:6px;color:var(--text-soft);font-size:14px;">1️⃣ Aplica Pirámide al sorteo anterior</div>
-      <div style="padding:6px;color:var(--text-soft);font-size:14px;">2️⃣ Genera números con las Tómbolas</div>
-      <div style="padding:6px;color:var(--text-soft);font-size:14px;">3️⃣ Apunta las coincidencias</div>
-      <div style="padding:6px;color:var(--text-soft);font-size:14px;">4️⃣ Ya tienes la Jugada 🎯</div>
-    </div>
-
-    <div class="matrix-loader">
+<div class="matrix-loader">
       <div class="cube-scene">
         <div class="rubik-cube">
           <div class="cube-face front"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -686,7 +752,7 @@
   <p id="tiempoInfo">⏱ Tiempo de máquina: 8 segundos</p>
 </div>
 
-      <p>Presiona el botón para girar las 3 tómbolas durante 8 segundos y generar 3 números.</p>
+      <p>Presiona ⏱️ Generar 2 minutos. El sistema girará automáticamente, se detendrá solo y sacará las mejores jugadas finales.</p>
 
       <div class="tombola-row">
         <div class="tombola">
@@ -711,9 +777,7 @@
       <div class="last">🎰 Última tirada: <span id="last">--</span></div>
 
       <div class="controls">
-        <button onclick="generarTombolas()">🎰 Generar 3 números</button>
-        <button id="btnInfinito" class="btn-infinite" onclick="toggleInfinito()">∞ Generar infinito</button>
-        <button class="btn-hot" onclick="generarJugadasCalientes()">🔥 Sacar mejores jugadas</button>
+        <button id="btnInfinito" class="btn-infinite" onclick="toggleInfinito()">⏱️ Generar 2 minutos</button>
         <button class="btn-clear" onclick="limpiarHistorial()">🗑️ Limpiar historial</button>
       </div>
 
@@ -729,7 +793,7 @@
 
       <div class="jugadas-finales">
         <div class="box-title">🏆 Jugadas calientes finales</div>
-        <div id="jugadasFinales" class="resultado-jugada">Genera varias tiradas o activa ∞ infinito. Luego presiona “Sacar mejores jugadas”.</div>
+        <div id="jugadasFinales" class="resultado-jugada">Activa ⏱️ Generar 2 minutos. Al terminar, las mejores jugadas saldrán automáticamente.</div>
         <button class="btn-copy" onclick="copiarJugadasFinales()">📋 Copiar jugadas finales</button>
       </div>
     </div>
@@ -787,6 +851,10 @@ let intervalo = null;
 let timeout = null;
 let autoInfinito = false;
 let autoTimeout = null;
+let autoStopTimeout = null;
+let autoFinTimestamp = 0;
+let autoCountdownInterval = null;
+const DURACION_AUTO_2MIN = 120000;
 let historial = [];
 let frecuencia = {};
 
@@ -846,9 +914,9 @@ function finalizar(){
 
   girando = false;
 
-  if(autoInfinito){
+  if(autoInfinito && Date.now() < autoFinTimestamp){
     autoTimeout = setTimeout(()=>{
-      if(autoInfinito && !girando){
+      if(autoInfinito && !girando && Date.now() < autoFinTimestamp){
         generarTombolas();
       }
     }, 700);
@@ -884,21 +952,55 @@ function actualizarBotonInfinito(){
   const btn = document.getElementById("btnInfinito");
   if(!btn) return;
   btn.classList.toggle("active", autoInfinito);
-  btn.textContent = autoInfinito ? "⏸️ Detener infinito" : "∞ Generar infinito";
+
+  if(autoInfinito){
+    const restante = Math.max(0, Math.ceil((autoFinTimestamp - Date.now()) / 1000));
+    const min = Math.floor(restante / 60);
+    const seg = String(restante % 60).padStart(2,"0");
+    btn.textContent = `⏱️ Generando ${min}:${seg}`;
+  }else{
+    btn.textContent = "⏱️ Generar 2 minutos";
+  }
 }
 
 function toggleInfinito(){
-  autoInfinito = !autoInfinito;
-  actualizarBotonInfinito();
-
-  if(!autoInfinito){
-    clearTimeout(autoTimeout);
-    autoTimeout = null;
+  if(autoInfinito){
+    detenerAuto2Min(false);
     return;
   }
 
+  autoInfinito = true;
+  autoFinTimestamp = Date.now() + DURACION_AUTO_2MIN;
+  actualizarBotonInfinito();
+
+  autoCountdownInterval = setInterval(actualizarBotonInfinito, 1000);
+  autoStopTimeout = setTimeout(()=>detenerAuto2Min(true), DURACION_AUTO_2MIN);
+
+  const box = document.getElementById("jugadasFinales");
+  if(box) box.textContent = "⏱️ Generando durante 2 minutos... Al finalizar, sacaré automáticamente las jugadas calientes.";
+
   if(!girando){
     generarTombolas();
+  }
+}
+
+function detenerAuto2Min(generarFinales=true){
+  autoInfinito = false;
+  clearTimeout(autoTimeout);
+  clearTimeout(autoStopTimeout);
+  clearInterval(autoCountdownInterval);
+  autoTimeout = null;
+  autoStopTimeout = null;
+  autoCountdownInterval = null;
+  actualizarBotonInfinito();
+
+  if(generarFinales){
+    if(girando){
+      clearInterval(intervalo);
+      clearTimeout(timeout);
+      finalizar();
+    }
+    generarJugadasCalientes();
   }
 }
 
@@ -995,7 +1097,11 @@ function limpiarHistorial(){
   if(girando) return;
   autoInfinito = false;
   clearTimeout(autoTimeout);
+  clearTimeout(autoStopTimeout);
+  clearInterval(autoCountdownInterval);
   autoTimeout = null;
+  autoStopTimeout = null;
+  autoCountdownInterval = null;
   actualizarBotonInfinito();
 
   historial = [];
@@ -1012,7 +1118,7 @@ function limpiarHistorial(){
   document.getElementById("last").textContent = "--";
   ultimaJugadaFinal = "";
   const jugadasBox = document.getElementById("jugadasFinales");
-  if(jugadasBox) jugadasBox.textContent = "Genera varias tiradas o activa ∞ infinito. Luego presiona “Sacar mejores jugadas”.";
+  if(jugadasBox) jugadasBox.textContent = "Activa ⏱️ Generar 2 minutos. Al terminar, las mejores jugadas saldrán automáticamente.";
   renderHistorial();
   renderFrecuencia();
 }
