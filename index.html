@@ -81,9 +81,14 @@ h1{
 .pinkText{color:var(--pink)}
 .greenText{color:var(--green)}
 textarea{
-  width:100%;
-  min-height:145px;
-  resize:vertical;
+  width:280px;
+  height:55px;
+  min-height:55px;
+  max-height:55px;
+  display:block;
+  margin:0 auto;
+  resize:none;
+  overflow:hidden;
   background:#050b18;
   color:#fff;
   border:1px solid rgba(0,234,255,.35);
@@ -198,11 +203,7 @@ button:hover{filter:brightness(1.14);transform:scale(1.01)}
   <section class="panel">
     <div class="title cyan"><div class="badge">G</div><div>HISTÓRICOS INTEGRADOS</div></div>
     <p class="small">Pega aquí tus 102 sorteos reales. Formato libre: 26-72-41, 26 72 41, uno por línea. Luego presiona GENERAR.</p>
-    <textarea id="historicos" placeholder="Pega aquí tus 102 sorteos reales...
-Ejemplo:
-26-72-41
-68-43-54
-85-89-00"></textarea>
+    <textarea id="historicos"></textarea>
     <button onclick="generarTodo()">🚀 GENERAR</button>
     <div class="status">
       <div class="stat"><b id="sorteosCount">0</b>Sorteos</div>
